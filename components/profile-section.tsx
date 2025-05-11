@@ -15,6 +15,7 @@ export default function ProfileSection() {
   const [cornerSize, setCornerSize] = useState(0)
   const [imageOpacity, setImageOpacity] = useState(0)
   const [showExtraImages, setShowExtraImages] = useState(false)
+  const [isNameHovered, setIsNameHovered] = useState(false)
   const imageRef = useRef(null)
 
   // Tech loading animation
@@ -225,32 +226,43 @@ export default function ProfileSection() {
       >
         {/* Name container with its own hover effect */}
         <div className="relative">
-          <div className="relative mx-auto w-fit overflow-hidden">
-            <motion.div
-              className="relative bg-black/40 px-12 py-6 backdrop-blur-md"
-              whileHover={{
-                backgroundColor: "rgba(0, 0, 0, 0.6)",
-                scale: 1.03,
-                transition: { duration: 0.3 },
-              }}
+          <div className="relative mx-auto w-fit">
+            {/* Interactive name container with hover state tracking */}
+            <div
+              className="relative cursor-pointer"
+              onMouseEnter={() => setIsNameHovered(true)}
+              onMouseLeave={() => setIsNameHovered(false)}
             >
-              {/* Tech corners for name container - smaller size */}
-              <TechCorners
-                color="rgba(66, 153, 225, 0.8)"
-                strokeWidth={2}
-                className="absolute inset-0"
-                animated={true}
-              />
-
-              <motion.h1
-                className="text-6xl font-semibold tracking-tight text-white sm:text-7xl"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.8 }}
+              {/* Container that scales on hover */}
+              <motion.div
+                className="relative bg-black/40 px-12 py-6 backdrop-blur-md"
+                animate={{
+                  scale: isNameHovered ? 1.05 : 1,
+                  backgroundColor: isNameHovered ? "rgba(0, 0, 0, 0.6)" : "rgba(0, 0, 0, 0.4)",
+                }}
+                transition={{ duration: 0.3 }}
               >
-                Lesmon Andres
-              </motion.h1>
-            </motion.div>
+                {/* Tech corners that scale with the container */}
+                <motion.div
+                  className="absolute inset-0"
+                  animate={{
+                    scale: isNameHovered ? 1.05 : 1,
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={true} />
+                </motion.div>
+
+                <motion.h1
+                  className="text-6xl font-semibold tracking-tight text-white sm:text-7xl"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.8 }}
+                >
+                  Lesmon Andres
+                </motion.h1>
+              </motion.div>
+            </div>
 
             {/* Horizontal line with gradient */}
             <div className="mx-auto mt-1 h-[3px] w-3/4 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />

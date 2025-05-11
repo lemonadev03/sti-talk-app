@@ -14,10 +14,10 @@ interface SocialLinksProps {
 }
 
 export default function SocialLinks({
-  linkedinUrl = "https://linkedin.com",
-  twitterUrl = "https://twitter.com",
-  facebookUrl = "https://facebook.com",
-  instagramUrl = "https://instagram.com",
+  linkedinUrl = "https://www.linkedin.com/in/lesmonandres/",
+  twitterUrl = "https://x.com/lesmonandres",
+  facebookUrl = "https://www.facebook.com/lesmonandres/",
+  instagramUrl = "https://instagram.com/lesmonandres",
 }: SocialLinksProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.3 })
@@ -96,6 +96,14 @@ export default function SocialLinks({
     },
   }
 
+  // Unified transition settings for all hover animations
+  const quickTransition = {
+    type: "spring",
+    stiffness: 500,
+    damping: 30,
+    mass: 1,
+  }
+
   return (
     <section ref={ref} className="relative z-20 py-16">
       <motion.div
@@ -134,19 +142,19 @@ export default function SocialLinks({
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex flex-col items-center justify-center border border-border bg-black/30 p-8 shadow-sm backdrop-blur-sm transition-all duration-200"
+            className="group relative flex flex-col items-center justify-center border border-border bg-black/30 p-8 shadow-sm backdrop-blur-sm"
             whileHover={{
               scale: 1.08,
               y: -10,
               backgroundColor: "rgba(0, 0, 0, 0.5)",
               borderColor: "rgba(66, 153, 225, 0.5)",
               boxShadow: "0 20px 30px -10px rgba(0, 0, 0, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.1)",
-              transition: {
-                duration: 0.2,
-                ease: "easeOut",
-              },
+              transition: quickTransition,
             }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{
+              scale: 0.95,
+              transition: quickTransition,
+            }}
             // Stagger the initial load animation for smoother appearance
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -159,15 +167,19 @@ export default function SocialLinks({
             {/* Tech corners for each social link */}
             <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={true} />
 
-            <div
-              className={`mb-4 flex h-16 w-16 items-center justify-center bg-primary/10 text-primary transition-all duration-200 ${link.hoverBg} group-hover:text-white`}
+            <motion.div
+              className={`mb-4 flex h-16 w-16 items-center justify-center bg-primary/10 text-primary ${link.hoverBg} group-hover:text-white`}
+              transition={quickTransition}
             >
               {link.icon}
-            </div>
+            </motion.div>
             <span className="text-lg font-medium">{link.name}</span>
 
-            {/* Animated glow effect on hover */}
-            <div className="absolute inset-0 -z-10 bg-primary/10 blur-xl opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+            {/* Animated glow effect on hover - now with quicker transition */}
+            <motion.div
+              className="absolute inset-0 -z-10 bg-primary/10 blur-xl opacity-0 group-hover:opacity-100"
+              transition={quickTransition}
+            />
           </motion.a>
         ))}
       </motion.div>
