@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* IBM Design Language colors */
+    --background: 220 30% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 30% 12%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 30% 12%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 220 100% 65%;
+    --primary-foreground: 220 30% 10%;
+
+    --secondary: 220 70% 55%;
+    --secondary-foreground: 220 30% 10%;
+
+    --muted: 220 30% 20%;
+    --muted-foreground: 210 20% 70%;
+
+    --accent: 220 30% 20%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 30% 20%;
+    --input: 220 30% 20%;
+    --ring: 220 100% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+
+  /* Smooth scrolling for inertia effects */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar - IBM Design Language inspired */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 0; /* Sharp corners */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+}
+
+/* IBM font utility classes */
+.font-ibm {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+/* Outfit font for friendly headers */
+.font-outfit {
+  font-family: var(--font-outfit), sans-serif;
+}
