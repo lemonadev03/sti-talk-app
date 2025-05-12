@@ -101,6 +101,12 @@ export default function SocialLinks({
     },
   }
 
+  // Mobile container variants - no animation
+  const mobileContainerVariants = {
+    hidden: { opacity: 1, y: 0 },
+    visible: { opacity: 1, y: 0 },
+  }
+
   // Simplified transition for mobile
   const mobileTransition = {
     type: "tween",
@@ -123,9 +129,9 @@ export default function SocialLinks({
     <section ref={ref} className="relative z-20 py-16">
       <motion.div
         className="relative mx-auto mb-10 w-fit"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.5, ease: "anticipate" }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: isMobile ? 0.1 : 0.5, ease: "anticipate" }}
         style={{
           y: isMobile ? 0 : titleY,
           // Use hardware acceleration
@@ -144,8 +150,8 @@ export default function SocialLinks({
       <motion.div
         className="grid grid-cols-2 gap-4 sm:gap-8 sm:grid-cols-4"
         initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        variants={containerVariants}
+        animate="visible"
+        variants={isMobile ? mobileContainerVariants : containerVariants}
         style={{
           y: isMobile ? 0 : containerY,
           // Use hardware acceleration
@@ -176,12 +182,12 @@ export default function SocialLinks({
               scale: 0.95,
               transition: transition,
             }}
-            // Stagger the initial load animation for smoother appearance
-            initial={{ opacity: 0, y: 20 }}
+            // No animation on mobile
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.4,
-              delay: isMobile ? 0.05 * index : 0.1 + index * 0.05,
+              duration: isMobile ? 0.1 : 0.4,
+              delay: isMobile ? 0 : 0.1 + index * 0.05,
               ease: "easeOut",
             }}
           >

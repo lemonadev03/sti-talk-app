@@ -18,26 +18,7 @@ export default function ProfileSection() {
   const [showExtraImages, setShowExtraImages] = useState(false)
   const [isNameHovered, setIsNameHovered] = useState(false)
   const imageRef = useRef(null)
-  const [isMobile, setIsMobile] = useState(false)
-  const isMobileHook = useMobile()
-
-  useEffect(() => {
-    // Function to check if the device is mobile
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth <= 768) // Adjust the breakpoint as needed
-    }
-
-    // Initial check
-    checkIsMobile()
-
-    // Listen for window resize events
-    window.addEventListener("resize", checkIsMobile)
-
-    // Clean up the event listener on unmount
-    return () => {
-      window.removeEventListener("resize", checkIsMobile)
-    }
-  }, [])
+  const isMobile = useMobile()
 
   // Tech loading animation
   useEffect(() => {
@@ -87,6 +68,7 @@ export default function ProfileSection() {
     return () => cancelAnimationFrame(rafId)
   }, [scrollPosition, isMobile])
 
+  // Desktop animation variants
   const profileVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -99,19 +81,25 @@ export default function ProfileSection() {
     },
   }
 
-  // Extra images that will emerge from the main profile picture - reduced to 2
+  // Mobile animation variants - no initial animation
+  const mobileProfileVariants = {
+    hidden: { opacity: 1, y: 0 },
+    visible: { opacity: 1, y: 0 },
+  }
+
+  // Extra images that will emerge from the main profile picture - using the new images
   const extraImages = [
     {
-      src: "/tech-project-1.png",
-      alt: "Project 1",
+      src: "/lesmon-speaking-1.png",
+      alt: "Lesmon speaking at an event",
       position: { x: -200, y: 0 }, // Left side
       rotation: -5,
       delay: 0.1,
       zIndex: -1, // Behind main image
     },
     {
-      src: "/tech-project-2.png",
-      alt: "Project 2",
+      src: "/lesmon-speaking-2.png",
+      alt: "Lesmon at AWS event",
       position: { x: 200, y: 0 }, // Right side
       rotation: 5,
       delay: 0.2,
@@ -122,9 +110,9 @@ export default function ProfileSection() {
   return (
     <motion.section
       className="relative z-20 flex flex-col items-center justify-center py-24 text-center"
-      initial="hidden"
+      initial={isMobile ? "visible" : "hidden"}
       animate="visible"
-      variants={profileVariants}
+      variants={isMobile ? mobileProfileVariants : profileVariants}
     >
       {/* Profile image with square tech style */}
       <motion.div
@@ -135,10 +123,14 @@ export default function ProfileSection() {
           // Use hardware acceleration
           transform: "translateZ(0)",
         }}
-        whileHover={{
-          scale: 1.05,
-          transition: { duration: 0.3 },
-        }}
+        whileHover={
+          isMobile
+            ? {}
+            : {
+                scale: 1.05,
+                transition: { duration: 0.3 },
+              }
+        }
       >
         {/* Extra images that emerge from the main profile - now behind and balanced */}
         {showExtraImages &&
@@ -147,13 +139,23 @@ export default function ProfileSection() {
               key={index}
               className="absolute z-0"
               style={{ zIndex: img.zIndex }}
-              initial={{
-                x: 0,
-                y: 0,
-                scale: 0.2,
-                opacity: 0,
-                rotate: 0,
-              }}
+              initial={
+                isMobile
+                  ? {
+                      x: img.position.x,
+                      y: img.position.y,
+                      scale: 0.9,
+                      opacity: 0.7,
+                      rotate: img.rotation,
+                    }
+                  : {
+                      x: 0,
+                      y: 0,
+                      scale: 0.2,
+                      opacity: 0,
+                      rotate: 0,
+                    }
+              }
               animate={{
                 x: img.position.x,
                 y: img.position.y,
@@ -161,21 +163,32 @@ export default function ProfileSection() {
                 opacity: 0.7,
                 rotate: img.rotation,
               }}
-              transition={{
-                type: "spring",
-                stiffness: 100,
-                damping: 15,
-                delay: img.delay,
-              }}
-              whileHover={{
-                scale: 1,
-                opacity: 0.9,
-                zIndex: 5,
-                boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
-              }}
+              transition={
+                isMobile
+                  ? {
+                      type: "tween",
+                      duration: 0.1,
+                    }
+                  : {
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 15,
+                      delay: img.delay,
+                    }
+              }
+              whileHover={
+                isMobile
+                  ? {}
+                  : {
+                      scale: 1,
+                      opacity: 0.9,
+                      zIndex: 5,
+                      boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
+                    }
+              }
             >
               <div className="relative h-[180px] w-[180px] overflow-hidden">
-                <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} animated={true} />
+                <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} animated={!isMobile} />
                 <Image
                   src={img.src || "/placeholder.svg"}
                   alt={img.alt}
@@ -189,26 +202,30 @@ export default function ProfileSection() {
 
         <div className="relative h-[280px] w-[280px] z-10">
           {/* Animated tech corners for profile image */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+          <motion.div
+            initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <TechCorners
               color="rgba(66, 153, 225, 0.8)"
               size={cornerSize}
               strokeWidth={2}
               className="absolute inset-0"
-              animated={true}
+              animated={!isMobile}
             />
           </motion.div>
 
-          {/* Square image with sharp corners */}
+          {/* Square image with sharp corners - updated to new AWS image */}
           <motion.div
             className="absolute inset-[2px] overflow-hidden"
-            initial={{ opacity: 0 }}
+            initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: imageOpacity }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: isMobile ? 0.1 : 0.8 }}
           >
             <Image
               ref={imageRef}
-              src="/professional-headshot.png"
+              src="/lesmon-aws.png"
               alt="Lesmon Andres"
               width={276}
               height={276}
@@ -279,14 +296,14 @@ export default function ProfileSection() {
                   }}
                   transition={{ duration: 0.3 }}
                 >
-                  <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={true} />
+                  <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={!isMobile} />
                 </motion.div>
 
                 <motion.h1
                   className="text-6xl font-semibold tracking-tight text-white sm:text-7xl"
-                  initial={{ opacity: 0 }}
+                  initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.8 }}
+                  transition={{ delay: isMobile ? 0 : 0.3, duration: isMobile ? 0.1 : 0.8 }}
                 >
                   Lesmon Andres
                 </motion.h1>
@@ -300,9 +317,9 @@ export default function ProfileSection() {
           {/* Title section with its own independent hover effect */}
           <motion.div
             className="mt-6"
-            initial={{ opacity: 0, y: 10 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
+            transition={{ delay: isMobile ? 0 : 0.5, duration: isMobile ? 0.1 : 0.6 }}
             whileHover={
               isMobile
                 ? {}

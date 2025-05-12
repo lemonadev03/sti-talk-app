@@ -277,9 +277,6 @@ export default function FloatingImages() {
     },
   ]
 
-  // Determine if we're on mobile
-  // const isMobile = windowSize.width < 768
-
   // If images aren't loaded yet, don't render anything to avoid layout shifts
   if (!isLoaded) return null
 
@@ -330,15 +327,16 @@ export default function FloatingImages() {
               transform: isMobile ? "none" : "translateZ(0)",
               willChange: isMobile ? "auto" : "transform",
             }}
-            initial={{ opacity: 0 }}
+            // Disable initial animation on mobile
+            initial={{ opacity: isMobile ? opacityValue : 0 }}
             animate={{
               opacity: opacityValue,
               transition: {
-                opacity: { duration: isMobile ? 0.3 : 0.8, delay: isMobile ? 0 : index * 0.05 },
+                opacity: { duration: isMobile ? 0.1 : 0.8, delay: isMobile ? 0 : index * 0.05 },
               },
             }}
           >
-            {/* Add bobbing animation */}
+            {/* Keep bobbing animation for both mobile and desktop */}
             <motion.div
               className="relative h-full w-full overflow-hidden rounded-xl shadow-xl"
               animate={{
