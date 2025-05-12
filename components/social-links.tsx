@@ -5,6 +5,7 @@ import { useRef, useEffect, useState } from "react"
 import TechCorners from "./tech-corners"
 import { useScrollContext } from "./scroll-provider"
 import { useInView } from "framer-motion"
+import { useMobile } from "@/hooks/use-mobile"
 
 interface SocialLinksProps {
   linkedinUrl?: string
@@ -24,9 +25,13 @@ export default function SocialLinks({
   const { scrollPosition } = useScrollContext()
   const [titleY, setTitleY] = useState(0)
   const [containerY, setContainerY] = useState(0)
+  const isMobile = useMobile()
 
   // Update values based on scroll position using RAF for smooth animation
   useEffect(() => {
+    // Skip scroll animations on mobile for better performance
+    if (isMobile) return
+
     const updateValues = () => {
       setTitleY(-scrollPosition * 15)
       setContainerY(-scrollPosition * 10)
@@ -35,7 +40,7 @@ export default function SocialLinks({
     // Use requestAnimationFrame for smoother updates
     const rafId = requestAnimationFrame(updateValues)
     return () => cancelAnimationFrame(rafId)
-  }, [scrollPosition])
+  }, [scrollPosition, isMobile])
 
   const socialLinks = [
     {
@@ -96,44 +101,56 @@ export default function SocialLinks({
     },
   }
 
-  // Unified transition settings for all hover animations
-  const quickTransition = {
+  // Simplified transition for mobile
+  const mobileTransition = {
+    type: "tween",
+    duration: 0.15,
+    ease: "easeOut",
+  }
+
+  // More complex transition for desktop
+  const desktopTransition = {
     type: "spring",
     stiffness: 500,
     damping: 30,
     mass: 1,
   }
 
+  // Choose appropriate transition based on device
+  const transition = isMobile ? mobileTransition : desktopTransition
+
   return (
     <section ref={ref} className="relative z-20 py-16">
       <motion.div
-        className="relative mx-auto mb-10 w-fit will-change-transform"
+        className="relative mx-auto mb-10 w-fit"
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.5, ease: "anticipate" }}
         style={{
-          y: titleY,
+          y: isMobile ? 0 : titleY,
           // Use hardware acceleration
           transform: "translateZ(0)",
+          willChange: isMobile ? "auto" : "transform",
         }}
       >
         {/* Enhanced section header - renamed to Let's Connect */}
         <div className="relative bg-black/40 px-10 py-4 backdrop-blur-md">
-          <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={true} />
+          <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={!isMobile} />
           <h2 className="text-4xl font-semibold tracking-tight text-white">Let's Connect!</h2>
         </div>
         <div className="mx-auto mt-1 h-[2px] w-3/4 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
       </motion.div>
 
       <motion.div
-        className="grid grid-cols-2 gap-8 sm:grid-cols-4 will-change-transform"
+        className="grid grid-cols-2 gap-4 sm:gap-8 sm:grid-cols-4"
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         variants={containerVariants}
         style={{
-          y: containerY,
+          y: isMobile ? 0 : containerY,
           // Use hardware acceleration
           transform: "translateZ(0)",
+          willChange: isMobile ? "auto" : "transform",
         }}
       >
         {socialLinks.map((link, index) => (
@@ -142,44 +159,50 @@ export default function SocialLinks({
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex flex-col items-center justify-center border border-border bg-black/30 p-8 shadow-sm backdrop-blur-sm"
-            whileHover={{
-              scale: 1.08,
-              y: -10,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              borderColor: "rgba(66, 153, 225, 0.5)",
-              boxShadow: "0 20px 30px -10px rgba(0, 0, 0, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.1)",
-              transition: quickTransition,
-            }}
+            className="group relative flex flex-col items-center justify-center border border-border bg-black/30 p-6 sm:p-8 shadow-sm backdrop-blur-sm"
+            whileHover={
+              isMobile
+                ? {}
+                : {
+                    scale: 1.08,
+                    y: -10,
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    borderColor: "rgba(66, 153, 225, 0.5)",
+                    boxShadow: "0 20px 30px -10px rgba(0, 0, 0, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.1)",
+                    transition: transition,
+                  }
+            }
             whileTap={{
               scale: 0.95,
-              transition: quickTransition,
+              transition: transition,
             }}
             // Stagger the initial load animation for smoother appearance
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.4,
-              delay: 0.1 + index * 0.05,
+              delay: isMobile ? 0.05 * index : 0.1 + index * 0.05,
               ease: "easeOut",
             }}
           >
-            {/* Tech corners for each social link */}
-            <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={true} />
+            {/* Tech corners for each social link - disable animation on mobile */}
+            <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={!isMobile} />
 
             <motion.div
               className={`mb-4 flex h-16 w-16 items-center justify-center bg-primary/10 text-primary ${link.hoverBg} group-hover:text-white`}
-              transition={quickTransition}
+              transition={transition}
             >
               {link.icon}
             </motion.div>
             <span className="text-lg font-medium">{link.name}</span>
 
-            {/* Animated glow effect on hover - now with quicker transition */}
-            <motion.div
-              className="absolute inset-0 -z-10 bg-primary/10 blur-xl opacity-0 group-hover:opacity-100"
-              transition={quickTransition}
-            />
+            {/* Animated glow effect on hover - disable on mobile */}
+            {!isMobile && (
+              <motion.div
+                className="absolute inset-0 -z-10 bg-primary/10 blur-xl opacity-0 group-hover:opacity-100"
+                transition={transition}
+              />
+            )}
           </motion.a>
         ))}
       </motion.div>
