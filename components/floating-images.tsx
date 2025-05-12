@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { motion } from "framer-motion"
 import { useScrollContext } from "./scroll-provider"
+import { useMobile } from "@/hooks/use-mobile"
 
 export default function FloatingImages() {
   // Use optimized scroll context instead of direct scroll hook
@@ -14,6 +15,8 @@ export default function FloatingImages() {
   const totalImages = 7
   const transformsRef = useRef([])
   const animationFrameRef = useRef(null)
+
+  const isMobile = useMobile()
 
   // Preload images to avoid stutter
   useEffect(() => {
@@ -132,6 +135,9 @@ export default function FloatingImages() {
 
   // Update target values based on scroll position
   useEffect(() => {
+    // Skip all parallax effects on mobile for better performance
+    if (isMobile) return
+
     // Don't update during active scrolling to prevent jank
     if (isScrolling && transformsRef.current.length) return
 
@@ -197,7 +203,7 @@ export default function FloatingImages() {
         }
       })
     }
-  }, [scrollPosition, isScrolling])
+  }, [scrollPosition, isScrolling, isMobile])
 
   // Force re-render when transforms update
   const [forceUpdate, setForceUpdate] = useState(0)
@@ -272,7 +278,7 @@ export default function FloatingImages() {
   ]
 
   // Determine if we're on mobile
-  const isMobile = windowSize.width < 768
+  // const isMobile = windowSize.width < 768
 
   // If images aren't loaded yet, don't render anything to avoid layout shifts
   if (!isLoaded) return null
@@ -304,26 +310,31 @@ export default function FloatingImages() {
         return (
           <motion.div
             key={index}
-            className="absolute will-change-transform"
+            className="absolute"
             style={{
               left: positionX,
               top: positionY,
               width: imageSize.width,
               height: imageSize.height,
-              // Use smoothly interpolated values
-              y: transforms.y,
-              rotate: transforms.rotate,
-              x: transforms.x,
+              // Only apply transforms on desktop
+              ...(isMobile
+                ? {}
+                : {
+                    y: transforms.y,
+                    rotate: transforms.rotate,
+                    x: transforms.x,
+                  }),
               // Add z-index to control stacking on mobile
               zIndex: isMobile ? images.length - index : 0,
-              // Use hardware acceleration
-              transform: "translateZ(0)",
+              // Use hardware acceleration only on desktop
+              transform: isMobile ? "none" : "translateZ(0)",
+              willChange: isMobile ? "auto" : "transform",
             }}
             initial={{ opacity: 0 }}
             animate={{
               opacity: opacityValue,
               transition: {
-                opacity: { duration: 0.8, delay: index * 0.05 }, // Faster, smoother fade-in
+                opacity: { duration: isMobile ? 0.3 : 0.8, delay: isMobile ? 0 : index * 0.05 },
               },
             }}
           >

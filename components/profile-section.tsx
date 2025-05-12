@@ -5,6 +5,7 @@ import Image from "next/image"
 import TechCorners from "./tech-corners"
 import { useScrollContext } from "./scroll-provider"
 import { useEffect, useState, useRef } from "react"
+import { useMobile } from "@/hooks/use-mobile"
 
 export default function ProfileSection() {
   const { scrollPosition } = useScrollContext()
@@ -17,6 +18,26 @@ export default function ProfileSection() {
   const [showExtraImages, setShowExtraImages] = useState(false)
   const [isNameHovered, setIsNameHovered] = useState(false)
   const imageRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
+  const isMobileHook = useMobile()
+
+  useEffect(() => {
+    // Function to check if the device is mobile
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768) // Adjust the breakpoint as needed
+    }
+
+    // Initial check
+    checkIsMobile()
+
+    // Listen for window resize events
+    window.addEventListener("resize", checkIsMobile)
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener("resize", checkIsMobile)
+    }
+  }, [])
 
   // Tech loading animation
   useEffect(() => {
@@ -47,6 +68,14 @@ export default function ProfileSection() {
 
   // Update values based on scroll position using RAF for smooth animation
   useEffect(() => {
+    // Skip scroll animations on mobile for better performance
+    if (isMobile) {
+      setProfileY(0)
+      setProfileScale(1)
+      setNameY(0)
+      return
+    }
+
     const updateValues = () => {
       setProfileY(scrollPosition * 20)
       setProfileScale(1 + scrollPosition * 0.05)
@@ -56,7 +85,7 @@ export default function ProfileSection() {
     // Use requestAnimationFrame for smoother updates
     const rafId = requestAnimationFrame(updateValues)
     return () => cancelAnimationFrame(rafId)
-  }, [scrollPosition])
+  }, [scrollPosition, isMobile])
 
   const profileVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -274,25 +303,42 @@ export default function ProfileSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            whileHover={{
-              scale: 1.05,
-              transition: { duration: 0.3 },
-            }}
+            whileHover={
+              isMobile
+                ? {}
+                : {
+                    scale: 1.05,
+                    transition: { duration: 0.3 },
+                  }
+            }
           >
             <div className="font-outfit text-2xl font-medium tracking-wide md:text-3xl">
-              {/* First line: blue, white */}
-              <div className="mb-2 flex flex-wrap items-center justify-center">
-                <span className="text-primary">Tech Founder</span>
-                <span className="mx-3 text-white/50">•</span>
-                <span className="text-white">Software Developer</span>
-              </div>
+              {isMobile ? (
+                // Mobile version: each label on its own line with alternating colors
+                <div className="flex flex-col items-center justify-center space-y-2">
+                  <span className="text-primary">Tech Founder</span>
+                  <span className="text-white">Software Developer</span>
+                  <span className="text-primary">AI Engineer</span>
+                  <span className="text-white">Technical Community Builder</span>
+                </div>
+              ) : (
+                // Desktop version: original design
+                <>
+                  {/* First line: blue, white */}
+                  <div className="mb-2 flex flex-wrap items-center justify-center">
+                    <span className="text-primary">Tech Founder</span>
+                    <span className="mx-3 text-white/50">•</span>
+                    <span className="text-white">Software Developer</span>
+                  </div>
 
-              {/* Second line: white, blue */}
-              <div className="flex flex-wrap items-center justify-center">
-                <span className="text-white">AI Engineer</span>
-                <span className="mx-3 text-white/50">•</span>
-                <span className="text-primary">Technical Community Builder</span>
-              </div>
+                  {/* Second line: white, blue */}
+                  <div className="flex flex-wrap items-center justify-center">
+                    <span className="text-white">AI Engineer</span>
+                    <span className="mx-3 text-white/50">•</span>
+                    <span className="text-primary">Technical Community Builder</span>
+                  </div>
+                </>
+              )}
             </div>
           </motion.div>
 

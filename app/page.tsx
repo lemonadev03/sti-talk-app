@@ -11,6 +11,7 @@ import TechHeader from "@/components/tech-header"
 import SkillsTicker from "@/components/skills-ticker"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import OptimizedMobileView from "@/components/optimized-mobile-view"
 
 // Tech skills list
 const techSkills = [
@@ -35,7 +36,10 @@ export default function Home() {
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange={false}>
       <ScrollProvider>
         <main className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-background to-background/80">
-          {/* Custom cursor */}
+          {/* Mobile optimizations */}
+          <OptimizedMobileView />
+
+          {/* Custom cursor - only on desktop */}
           <CustomCursor />
 
           {/* Background */}
