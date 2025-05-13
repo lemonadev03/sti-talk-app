@@ -128,7 +128,7 @@ export default function ProfileSection() {
         <div className="absolute right-[20%] top-[30%] h-[30%] w-[1px] bg-gradient-to-b from-primary/0 via-primary/20 to-primary/0" />
       </div>
 
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full max-w-6xl mx-auto">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full max-w-7xl mx-auto">
         {/* Image group container - includes space for side images */}
         <div
           className="relative flex justify-center items-center md:w-[35%]"
@@ -369,7 +369,7 @@ export default function ProfileSection() {
 
         {/* New dynamic name presentation - left aligned with blur background */}
         <motion.div
-          className="relative flex flex-col items-start text-left will-change-transform self-center md:w-[65%] w-full"
+          className="relative flex flex-col items-start text-left will-change-transform self-center md:w-[70%] w-full"
           style={{
             y: nameY,
             // Use hardware acceleration
@@ -377,7 +377,7 @@ export default function ProfileSection() {
           }}
         >
           {/* Blur background for text area */}
-          <div className="absolute -inset-6 -z-10 rounded-xl bg-black/30 backdrop-blur-md w-[calc(100%+3rem)]"></div>
+          <div className="absolute -inset-6 -z-10 rounded-xl bg-black/30 backdrop-blur-md w-[calc(100%+3.5rem)]"></div>
 
           {/* Content with padding to account for blur background */}
           <div className="p-6 w-full">

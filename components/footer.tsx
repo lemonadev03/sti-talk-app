@@ -5,7 +5,7 @@ import { useInView } from "framer-motion"
 import { useRef } from "react"
 import TechCorners from "./tech-corners"
 import Link from "next/link"
-import { ArrowUp, Github, Linkedin, Twitter, Instagram, Facebook, ArrowRight, Mail } from "lucide-react"
+import { ArrowUp, Github, Linkedin, Twitter, Instagram, Facebook, Mail } from "lucide-react"
 import Image from "next/image"
 import { useMobile } from "@/hooks/use-mobile"
 
@@ -128,7 +128,7 @@ export default function Footer({
               transition={{ duration: 0.5, delay: 0.3 }}
             >
               <h3 className="mb-4 text-left text-lg font-medium">Social</h3>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {socialLinks.map((link, linkIndex) => (
                   <motion.li
                     key={link.name}
@@ -136,26 +136,22 @@ export default function Footer({
                     animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
                     transition={{ duration: 0.3, delay: 0.4 + linkIndex * 0.05 }}
                   >
-                    <motion.a
+                    <a
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex w-full items-center justify-start text-sm text-muted-foreground transition-all duration-200 hover:text-primary"
-                      whileHover={{ x: 3 }}
-                      whileTap={{ scale: 0.98 }}
+                      className="group relative flex items-center text-sm text-muted-foreground transition-colors hover:text-primary"
                     >
-                      <span className="flex items-center">
+                      {/* Arrow that only appears on hover */}
+                      <span className="absolute left-0 text-primary opacity-0 transition-all duration-200 group-hover:opacity-100">
+                        ›
+                      </span>
+                      {/* Text that slides right on hover */}
+                      <span className="flex items-center transition-transform duration-200 group-hover:translate-x-5">
                         {link.icon}
                         {link.name}
                       </span>
-                      <motion.span
-                        className="ml-2 opacity-0 transition-opacity group-hover:opacity-100"
-                        initial={{ x: 0 }}
-                        whileHover={{ x: 2 }}
-                      >
-                        <ArrowRight className="h-3 w-3" />
-                      </motion.span>
-                    </motion.a>
+                    </a>
                   </motion.li>
                 ))}
               </ul>
