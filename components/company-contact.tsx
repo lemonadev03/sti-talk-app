@@ -53,11 +53,10 @@ export default function CompanyContact({ bscaleUrl = "#" }: CompanyContactProps)
         }}
       >
         {/* Enhanced section header - now "Contact Bscale" */}
-        <div className="relative bg-black/40 px-10 py-4 backdrop-blur-md">
-          <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={!isMobile} />
-          <h2 className="text-4xl font-semibold tracking-tight text-white">Contact Bscale</h2>
+        <div className="relative px-0 py-0">
+          <h2 className="text-6xl font-extrabold text-white">Contact Us</h2>
+          <div className="mt-2 h-1 w-full bg-[#4589ff] rounded" />
         </div>
-        <div className="mx-auto mt-1 h-[2px] w-3/4 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
       </motion.div>
 
       <motion.div

@@ -61,7 +61,7 @@ export default function Home() {
             <FloatingImages />
           </Suspense>
 
-          <div className="container relative z-10 mx-auto max-w-5xl px-4">
+          <div className="container relative z-10 mx-auto max-w-screen-2xl px-4">
             {/* Hero section - full viewport height */}
             <div id="home" className="flex min-h-screen flex-col justify-center pt-16">
               {/* New tech header - now much larger */}

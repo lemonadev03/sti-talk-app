@@ -96,9 +96,9 @@ export default function ProfileSection() {
   }
 
   // Calculate main image size based on device
-  const mainImageSize = isMobile ? 220 : 280
+  const mainImageSize = isMobile ? 220 : 360
   // Calculate side image size based on device
-  const sideImageSize = isMobile ? 150 : 180
+  const sideImageSize = isMobile ? 150 : 220
 
   // Skill items with icons for both mobile and desktop
   const skillItems = [
@@ -128,11 +128,11 @@ export default function ProfileSection() {
         <div className="absolute right-[20%] top-[30%] h-[30%] w-[1px] bg-gradient-to-b from-primary/0 via-primary/20 to-primary/0" />
       </div>
 
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24 w-full max-w-screen-2xl mx-auto">
         {/* Image group container - includes space for side images */}
         <div
-          className={`relative flex justify-center items-center ${isMobile ? "mt-32 mb-8" : "md:w-[35%]"}`}
-          style={{ width: isMobile ? "auto" : `${mainImageSize + (sideImageSize * 2) + 80}px` }}
+          className={`relative flex justify-center items-center self-center${isMobile ? " mt-32 mb-8" : ""}`}
+          style={{ width: isMobile ? "auto" : undefined }}
         >
           {/* Profile image with square tech style */}
           <motion.div
@@ -162,7 +162,7 @@ export default function ProfileSection() {
                   style={{
                     zIndex: -1,
                     left: isMobile ? `calc(-${sideImageSize}px - 10px)` : `-${sideImageSize + 20}px`,
-                    top: isMobile ? "30px" : "-10px", // Adjusted for mobile to move down
+                    top: isMobile ? "30px" : "-30px", // Moved up for better vertical balance
                   }}
                   initial={
                     isMobile
@@ -217,8 +217,8 @@ export default function ProfileSection() {
                   >
                     <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} animated={!isMobile} />
                     <Image
-                      src="/lesmon-speaking-1.png"
-                      alt="Lesmon speaking at an event"
+                      src="/lesmon-aws.png"
+                      alt="Lesmon Andres"
                       width={sideImageSize}
                       height={sideImageSize}
                       className="h-full w-full object-cover"
@@ -233,7 +233,7 @@ export default function ProfileSection() {
                     zIndex: -1,
                     left: isMobile ? "auto" : `-${sideImageSize + 40}px`,
                     right: isMobile ? `calc(-${sideImageSize}px - 10px)` : "auto",
-                    top: isMobile ? "30px" : "120px", // Adjusted for mobile to move down
+                    top: isMobile ? "30px" : "180px", // Increased for more vertical distance
                   }}
                   initial={
                     isMobile
@@ -330,8 +330,8 @@ export default function ProfileSection() {
               >
                 <Image
                   ref={imageRef}
-                  src="/lesmon-aws.png"
-                  alt="Lesmon Andres"
+                  src="/lesmon-speaking-1.png"
+                  alt="Lesmon speaking at an event"
                   width={mainImageSize - 4}
                   height={mainImageSize - 4}
                   className="h-full w-full object-cover"
@@ -369,7 +369,7 @@ export default function ProfileSection() {
 
         {/* New dynamic name presentation - left aligned with blur background */}
         <motion.div
-          className="relative flex flex-col items-start text-left will-change-transform self-center md:w-[70%] w-full"
+          className="relative flex flex-col items-start text-left will-change-transform self-center w-full md:flex-grow md:basis-0 md:max-w-2xl"
           style={{
             y: nameY,
             // Use hardware acceleration
@@ -466,8 +466,7 @@ export default function ProfileSection() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.9 }}
             >
-              Passionate about leveraging technology to solve complex problems and build innovative solutions that make
-              a difference.
+              If there should be an app for that, we're probably building it!
             </motion.p>
           </div>
         </motion.div>

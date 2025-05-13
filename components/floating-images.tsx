@@ -21,13 +21,13 @@ export default function FloatingImages() {
   // Preload images to avoid stutter
   useEffect(() => {
     const imageUrls = [
-      "/floating-image-1.png",
-      "/floating-image-2.png",
-      "/floating-image-3.png",
-      "/floating-image-4.png",
-      "/floating-image-5.png",
-      "/floating-image-6.png",
-      "/floating-image-7.png",
+      "/clairissa.png",
+      "/financier.png",
+      "/osdb.png",
+      "/tapp.png",
+      "/tasknest.png",
+      "/hampy.png",
+      "/travalarm.png",
     ]
 
     imageUrls.forEach((src) => {
@@ -221,7 +221,7 @@ export default function FloatingImages() {
   // Added more spacing between images
   const images = [
     {
-      src: "/floating-image-1.png",
+      src: "/clairissa.png",
       alt: "Tech image 1",
       initialX: "12%", // Left side - adjusted for spacing
       initialY: "8%", // Higher up - adjusted for spacing
@@ -229,7 +229,7 @@ export default function FloatingImages() {
       mobilePosition: { x: "5%", y: "6%" },
     },
     {
-      src: "/floating-image-2.png",
+      src: "/financier.png",
       alt: "Tech image 2",
       initialX: "70%", // Right side - adjusted for spacing
       initialY: "12%", // Higher up - adjusted for spacing
@@ -237,7 +237,7 @@ export default function FloatingImages() {
       mobilePosition: { x: "75%", y: "10%" },
     },
     {
-      src: "/floating-image-3.png",
+      src: "/osdb.png",
       alt: "Tech image 3",
       initialX: "5%", // Further left - adjusted for spacing
       initialY: "45%", // Middle - adjusted for spacing
@@ -245,7 +245,7 @@ export default function FloatingImages() {
       mobilePosition: { x: "2%", y: "45%" },
     },
     {
-      src: "/floating-image-4.png",
+      src: "/tapp.png",
       alt: "Tech image 4",
       initialX: "78%", // Further right - adjusted for spacing
       initialY: "50%", // Middle - adjusted for spacing
@@ -253,7 +253,7 @@ export default function FloatingImages() {
       mobilePosition: { x: "80%", y: "45%" },
     },
     {
-      src: "/floating-image-5.png", // New image
+      src: "/tasknest.png", // New image
       alt: "Tech image 5",
       initialX: "42%", // Center - adjusted for spacing
       initialY: "3%", // Very top - adjusted for spacing
@@ -261,7 +261,7 @@ export default function FloatingImages() {
       mobilePosition: { x: "38%", y: "3%" },
     },
     {
-      src: "/floating-image-6.png", // New image
+      src: "/hampy.png", // New image
       alt: "Tech image 6",
       initialX: "22%", // Left-center - adjusted for spacing
       initialY: "28%", // Upper middle - adjusted for spacing
@@ -269,7 +269,7 @@ export default function FloatingImages() {
       mobilePosition: { x: "15%", y: "25%" },
     },
     {
-      src: "/floating-image-7.png", // New image
+      src: "/travalarm.png", // New image
       alt: "Tech image 7",
       initialX: "60%", // Right-center - adjusted for spacing
       initialY: "33%", // Upper middle - adjusted for spacing
