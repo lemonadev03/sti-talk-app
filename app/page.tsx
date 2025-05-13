@@ -15,13 +15,13 @@ import OptimizedMobileView from "@/components/optimized-mobile-view"
 
 // Tech skills list
 const techSkills = [
-  "Backend Engineering",
-  "Infrastructure Security",
-  "Data Engineering",
-  "Data Science",
-  "Data Analytics",
-  "Cloud Engineering",
-]
+  "Custom Business Systems & Automation", // Backend Engineering
+  "Cybersecurity & Data Protection", // Infrastructure Security
+  "Data Infrastructure & Integration", // Data Engineering
+  "Predictive Analytics & Business Forecasting", // Data Science
+  "Business Dashboards & Performance Tracking", // Data Analytics
+  "Scalable, Cloud-Based Solutions" // Cloud Engineering
+];
 
 // Hardcoded URL variables instead of environment variables
 const LINKEDIN_URL = "https://linkedin.com/in/lesmonandres"
