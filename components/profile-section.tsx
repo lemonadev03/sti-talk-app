@@ -6,6 +6,7 @@ import TechCorners from "./tech-corners"
 import { useScrollContext } from "./scroll-provider"
 import { useEffect, useState, useRef } from "react"
 import { useMobile } from "@/hooks/use-mobile"
+import { Code, Cpu, Lightbulb, Users } from "lucide-react"
 
 export default function ProfileSection() {
   const { scrollPosition } = useScrollContext()
@@ -19,6 +20,7 @@ export default function ProfileSection() {
   const [isNameHovered, setIsNameHovered] = useState(false)
   const imageRef = useRef(null)
   const isMobile = useMobile()
+  const [nameAnimationComplete, setNameAnimationComplete] = useState(false)
 
   // Tech loading animation
   useEffect(() => {
@@ -40,10 +42,16 @@ export default function ProfileSection() {
       setShowExtraImages(true)
     }, 1500)
 
+    // Set name animation complete after delay
+    const nameAnimTimer = setTimeout(() => {
+      setNameAnimationComplete(true)
+    }, 2000)
+
     return () => {
       clearTimeout(cornerTimer)
       clearTimeout(imageTimer)
       clearTimeout(extraImagesTimer)
+      clearTimeout(nameAnimTimer)
     }
   }, [])
 
@@ -87,261 +95,55 @@ export default function ProfileSection() {
     visible: { opacity: 1, y: 0 },
   }
 
-  // Extra images that will emerge from the main profile picture - using the new images
-  const extraImages = [
-    {
-      src: "/lesmon-speaking-1.png",
-      alt: "Lesmon speaking at an event",
-      position: { x: -200, y: 0 }, // Left side
-      mobilePosition: { x: -160, y: 0 }, // Better balanced on mobile
-      rotation: -5,
-      delay: 0.1,
-      zIndex: -1, // Behind main image
-    },
-    {
-      src: "/lesmon-speaking-2.png",
-      alt: "Lesmon at AWS event",
-      position: { x: 200, y: 0 }, // Right side
-      mobilePosition: { x: 160, y: 0 }, // Better balanced on mobile
-      rotation: 5,
-      delay: 0.2,
-      zIndex: -1, // Behind main image
-    },
-  ]
-
   // Calculate main image size based on device
   const mainImageSize = isMobile ? 220 : 280
   // Calculate side image size based on device
   const sideImageSize = isMobile ? 150 : 180
 
+  // Skill items with icons for both mobile and desktop
+  const skillItems = [
+    { text: "Tech Founder", icon: <Lightbulb className="h-4 w-4" />, color: "text-primary" },
+    { text: "Software Developer", icon: <Code className="h-4 w-4" />, color: "text-white" },
+    { text: "AI Engineer", icon: <Cpu className="h-4 w-4" />, color: "text-primary" },
+    { text: "Technical Community Builder", icon: <Users className="h-4 w-4" />, color: "text-white" },
+  ]
+
   return (
     <motion.section
-      className="relative z-20 flex flex-col items-center justify-center py-24 text-center"
+      className="relative z-20 flex flex-col items-center justify-center py-24 text-left px-4 md:px-8"
       initial={isMobile ? "visible" : "hidden"}
       animate="visible"
       variants={isMobile ? mobileProfileVariants : profileVariants}
     >
-      {/* Profile image with square tech style */}
-      <motion.div
-        className="relative mb-12 will-change-transform"
-        style={{
-          y: profileY,
-          scale: profileScale,
-          // Use hardware acceleration
-          transform: "translateZ(0)",
-        }}
-        whileHover={
-          isMobile
-            ? {}
-            : {
-                scale: 1.05,
-                transition: { duration: 0.3 },
-              }
-        }
-      >
-        {/* Extra images that emerge from the main profile - now behind and balanced */}
-        {showExtraImages &&
-          extraImages.map((img, index) => (
-            <motion.div
-              key={index}
-              className="absolute z-0"
-              style={{
-                zIndex: img.zIndex,
-                // Center the side images vertically with the main image
-                top: `calc(50% - ${sideImageSize / 2}px)`,
-                // Position left or right based on index
-                left: index === 0 ? `calc(50% - ${mainImageSize / 2}px - ${sideImageSize}px - 10px)` : "auto",
-                right: index === 1 ? `calc(50% - ${mainImageSize / 2}px - ${sideImageSize}px - 10px)` : "auto",
-              }}
-              initial={
-                isMobile
-                  ? {
-                      opacity: 0.7,
-                      scale: 0.9,
-                      rotate: img.rotation,
-                    }
-                  : {
-                      x: 0,
-                      y: 0,
-                      scale: 0.2,
-                      opacity: 0,
-                      rotate: 0,
-                    }
-              }
-              animate={{
-                opacity: 0.7,
-                scale: 0.9,
-                rotate: img.rotation,
-              }}
-              transition={
-                isMobile
-                  ? {
-                      type: "tween",
-                      duration: 0.1,
-                    }
-                  : {
-                      type: "spring",
-                      stiffness: 100,
-                      damping: 15,
-                      delay: img.delay,
-                    }
-              }
-              whileHover={
-                isMobile
-                  ? {}
-                  : {
-                      scale: 1,
-                      opacity: 0.9,
-                      zIndex: 5,
-                      boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
-                    }
-              }
-            >
-              <div
-                className="relative overflow-hidden"
-                style={{
-                  height: `${sideImageSize}px`,
-                  width: `${sideImageSize}px`,
-                }}
-              >
-                <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} animated={!isMobile} />
-                <Image
-                  src={img.src || "/placeholder.svg"}
-                  alt={img.alt}
-                  width={sideImageSize}
-                  height={sideImageSize}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </motion.div>
-          ))}
+      {/* Tech-inspired abstract background pattern */}
+      <div className="absolute inset-0 z-0 overflow-hidden opacity-10">
+        <div className="absolute -left-1/4 -top-1/4 h-1/2 w-1/2 rounded-full bg-primary/30 blur-[100px]" />
+        <div className="absolute -right-1/4 -bottom-1/4 h-1/2 w-1/2 rounded-full bg-primary/20 blur-[100px]" />
+        <div className="absolute left-1/4 top-1/2 h-1/3 w-1/3 rounded-full bg-primary/15 blur-[80px]" />
 
+        {/* Tech circuit lines */}
+        <div className="absolute left-[10%] top-[20%] h-[40%] w-[1px] bg-gradient-to-b from-primary/0 via-primary/30 to-primary/0" />
+        <div className="absolute left-[10%] top-[20%] h-[1px] w-[30%] bg-gradient-to-r from-primary/0 via-primary/30 to-primary/0" />
+        <div className="absolute right-[20%] top-[30%] h-[1px] w-[20%] bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0" />
+        <div className="absolute right-[20%] top-[30%] h-[30%] w-[1px] bg-gradient-to-b from-primary/0 via-primary/20 to-primary/0" />
+      </div>
+
+      <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full max-w-6xl mx-auto">
+        {/* Image group container - includes space for side images */}
         <div
-          className="relative z-10 mx-auto"
-          style={{
-            height: `${mainImageSize}px`,
-            width: `${mainImageSize}px`,
-          }}
+          className="relative flex justify-center items-center md:w-[35%]"
+          style={{ width: isMobile ? "auto" : `${mainImageSize + (sideImageSize * 2) + 80}px` }}
         >
-          {/* Animated tech corners for profile image */}
+          {/* Profile image with square tech style */}
           <motion.div
-            initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <TechCorners
-              color="rgba(66, 153, 225, 0.8)"
-              size={cornerSize}
-              strokeWidth={2}
-              className="absolute inset-0"
-              animated={!isMobile}
-            />
-          </motion.div>
-
-          {/* Square image with sharp corners - updated to new AWS image */}
-          <motion.div
-            className="absolute inset-[2px] overflow-hidden"
-            initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: imageOpacity }}
-            transition={{ duration: isMobile ? 0.1 : 0.8 }}
-          >
-            <Image
-              ref={imageRef}
-              src="/lesmon-aws.png"
-              alt="Lesmon Andres"
-              width={mainImageSize - 4}
-              height={mainImageSize - 4}
-              className="h-full w-full object-cover"
-              priority
-              onLoad={() => setImageLoaded(true)}
-            />
-          </motion.div>
-
-          {/* Tech glitch effect on hover */}
-          <motion.div
-            className="absolute inset-0 bg-primary/20 mix-blend-overlay opacity-0"
-            whileHover={{ opacity: 1 }}
-            transition={{ duration: 0.2 }}
-          />
-
-          {/* Overlay with tech pattern */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent mix-blend-overlay" />
-
-          {/* Tech loading indicators */}
-          <motion.div
-            className="absolute bottom-2 right-2 h-3 w-3 rounded-none bg-primary"
-            animate={{
-              opacity: [0, 1, 0],
-              scale: [0.8, 1.2, 0.8],
+            className="relative will-change-transform mx-auto flex items-center justify-center"
+            style={{
+              y: profileY,
+              scale: profileScale,
+              // Use hardware acceleration
+              transform: "translateZ(0)",
+              marginLeft: isMobile ? "0" : `${sideImageSize + 40}px`, // Offset to account for side images
             }}
-            transition={{
-              duration: 1.5,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "loop",
-            }}
-          />
-        </div>
-      </motion.div>
-
-      {/* Container for name and titles with scroll animation but NO hover effect */}
-      <motion.div
-        className="relative will-change-transform"
-        style={{
-          y: nameY,
-          // Use hardware acceleration
-          transform: "translateZ(0)",
-        }}
-      >
-        {/* Name container with its own hover effect */}
-        <div className="relative">
-          <div className="relative mx-auto w-fit">
-            {/* Interactive name container with hover state tracking */}
-            <div
-              className="relative cursor-pointer"
-              onMouseEnter={() => setIsNameHovered(true)}
-              onMouseLeave={() => setIsNameHovered(false)}
-            >
-              {/* Container that scales on hover */}
-              <motion.div
-                className="relative bg-black/40 px-12 py-6 backdrop-blur-md"
-                animate={{
-                  scale: isNameHovered ? 1.05 : 1,
-                  backgroundColor: isNameHovered ? "rgba(0, 0, 0, 0.6)" : "rgba(0, 0, 0, 0.4)",
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Tech corners that scale with the container */}
-                <motion.div
-                  className="absolute inset-0"
-                  animate={{
-                    scale: isNameHovered ? 1.05 : 1,
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={!isMobile} />
-                </motion.div>
-
-                <motion.h1
-                  className="text-6xl font-semibold tracking-tight text-white sm:text-7xl"
-                  initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: isMobile ? 0 : 0.3, duration: isMobile ? 0.1 : 0.8 }}
-                >
-                  Lesmon Andres
-                </motion.h1>
-              </motion.div>
-            </div>
-
-            {/* Horizontal line with gradient */}
-            <div className="mx-auto mt-1 h-[3px] w-3/4 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
-          </div>
-
-          {/* Title section with its own independent hover effect */}
-          <motion.div
-            className="mt-6"
-            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: isMobile ? 0 : 0.5, duration: isMobile ? 0.1 : 0.6 }}
             whileHover={
               isMobile
                 ? {}
@@ -351,51 +153,325 @@ export default function ProfileSection() {
                   }
             }
           >
-            <div className="font-outfit text-2xl font-medium tracking-wide md:text-3xl">
-              {isMobile ? (
-                // Mobile version: each label on its own line with alternating colors
-                <div className="flex flex-col items-center justify-center space-y-2">
-                  <span className="text-primary">Tech Founder</span>
-                  <span className="text-white">Software Developer</span>
-                  <span className="text-primary">AI Engineer</span>
-                  <span className="text-white">Technical Community Builder</span>
-                </div>
-              ) : (
-                // Desktop version: original design
-                <>
-                  {/* First line: blue, white */}
-                  <div className="mb-2 flex flex-wrap items-center justify-center">
-                    <span className="text-primary">Tech Founder</span>
-                    <span className="mx-3 text-white/50">•</span>
-                    <span className="text-white">Software Developer</span>
+            {/* Left side images - now positioned with fixed offsets */}
+            {showExtraImages && (
+              <>
+                {/* Top left image - moved down to create more space */}
+                <motion.div
+                  className="absolute z-0"
+                  style={{
+                    zIndex: -1,
+                    left: isMobile ? `calc(-${sideImageSize}px - 10px)` : `-${sideImageSize + 20}px`,
+                    top: isMobile ? "0" : "-10px", // Changed from -40px to -10px to move it down
+                  }}
+                  initial={
+                    isMobile
+                      ? {
+                          opacity: 0.7,
+                          scale: 0.9,
+                          rotate: -5,
+                        }
+                      : {
+                          x: 0,
+                          y: 0,
+                          scale: 0.2,
+                          opacity: 0,
+                          rotate: 0,
+                        }
+                  }
+                  animate={{
+                    opacity: 0.7,
+                    scale: 0.9,
+                    rotate: -5,
+                  }}
+                  transition={
+                    isMobile
+                      ? {
+                          type: "tween",
+                          duration: 0.1,
+                        }
+                      : {
+                          type: "spring",
+                          stiffness: 100,
+                          damping: 15,
+                          delay: 0.1,
+                        }
+                  }
+                  whileHover={
+                    isMobile
+                      ? {}
+                      : {
+                          scale: 1,
+                          opacity: 0.9,
+                          zIndex: 5,
+                          boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
+                        }
+                  }
+                >
+                  <div
+                    className="relative overflow-hidden"
+                    style={{
+                      height: `${sideImageSize}px`,
+                      width: `${sideImageSize}px`,
+                    }}
+                  >
+                    <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} animated={!isMobile} />
+                    <Image
+                      src="/lesmon-speaking-1.png"
+                      alt="Lesmon speaking at an event"
+                      width={sideImageSize}
+                      height={sideImageSize}
+                      className="h-full w-full object-cover"
+                    />
                   </div>
+                </motion.div>
 
-                  {/* Second line: white, blue */}
-                  <div className="flex flex-wrap items-center justify-center">
-                    <span className="text-white">AI Engineer</span>
-                    <span className="mx-3 text-white/50">•</span>
-                    <span className="text-primary">Technical Community Builder</span>
+                {/* Bottom left image - moved up to create more space */}
+                <motion.div
+                  className="absolute z-0"
+                  style={{
+                    zIndex: -1,
+                    left: isMobile ? "auto" : `-${sideImageSize + 40}px`,
+                    right: isMobile ? `calc(-${sideImageSize}px - 10px)` : "auto",
+                    top: isMobile ? "0" : "120px", // Changed from 50px to 120px to move it down more
+                  }}
+                  initial={
+                    isMobile
+                      ? {
+                          opacity: 0.7,
+                          scale: 0.9,
+                          rotate: 5,
+                        }
+                      : {
+                          x: 0,
+                          y: 0,
+                          scale: 0.2,
+                          opacity: 0,
+                          rotate: 0,
+                        }
+                  }
+                  animate={{
+                    opacity: 0.7,
+                    scale: 0.9,
+                    rotate: 5,
+                  }}
+                  transition={
+                    isMobile
+                      ? {
+                          type: "tween",
+                          duration: 0.1,
+                        }
+                      : {
+                          type: "spring",
+                          stiffness: 100,
+                          damping: 15,
+                          delay: 0.2,
+                        }
+                  }
+                  whileHover={
+                    isMobile
+                      ? {}
+                      : {
+                          scale: 1,
+                          opacity: 0.9,
+                          zIndex: 5,
+                          boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
+                        }
+                  }
+                >
+                  <div
+                    className="relative overflow-hidden"
+                    style={{
+                      height: `${sideImageSize}px`,
+                      width: `${sideImageSize}px`,
+                    }}
+                  >
+                    <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} animated={!isMobile} />
+                    <Image
+                      src="/lesmon-speaking-2.png"
+                      alt="Lesmon at AWS event"
+                      width={sideImageSize}
+                      height={sideImageSize}
+                      className="h-full w-full object-cover"
+                    />
                   </div>
-                </>
-              )}
+                </motion.div>
+              </>
+            )}
+
+            <div
+              className="relative z-10 mx-auto"
+              style={{
+                height: `${mainImageSize}px`,
+                width: `${mainImageSize}px`,
+              }}
+            >
+              {/* Animated tech corners for profile image */}
+              <motion.div
+                initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <TechCorners
+                  color="rgba(66, 153, 225, 0.8)"
+                  size={cornerSize}
+                  strokeWidth={2}
+                  className="absolute inset-0"
+                  animated={!isMobile}
+                />
+              </motion.div>
+
+              {/* Square image with sharp corners - updated to new AWS image */}
+              <motion.div
+                className="absolute inset-[2px] overflow-hidden"
+                initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: imageOpacity }}
+                transition={{ duration: isMobile ? 0.1 : 0.8 }}
+              >
+                <Image
+                  ref={imageRef}
+                  src="/lesmon-aws.png"
+                  alt="Lesmon Andres"
+                  width={mainImageSize - 4}
+                  height={mainImageSize - 4}
+                  className="h-full w-full object-cover"
+                  priority
+                  onLoad={() => setImageLoaded(true)}
+                />
+              </motion.div>
+
+              {/* Tech glitch effect on hover */}
+              <motion.div
+                className="absolute inset-0 bg-primary/20 mix-blend-overlay opacity-0"
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+              />
+
+              {/* Overlay with tech pattern */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent mix-blend-overlay" />
+
+              {/* Tech loading indicators */}
+              <motion.div
+                className="absolute bottom-2 right-2 h-3 w-3 rounded-none bg-primary"
+                animate={{
+                  opacity: [0, 1, 0],
+                  scale: [0.8, 1.2, 0.8],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatType: "loop",
+                }}
+              />
             </div>
           </motion.div>
-
-          {/* Subtle glow effect */}
-          <motion.div
-            className="absolute -inset-8 -z-10 rounded-none bg-primary/5 opacity-50 blur-2xl"
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "reverse",
-            }}
-          />
         </div>
-      </motion.div>
+
+        {/* New dynamic name presentation - left aligned with blur background */}
+        <motion.div
+          className="relative flex flex-col items-start text-left will-change-transform self-center md:w-[65%] w-full"
+          style={{
+            y: nameY,
+            // Use hardware acceleration
+            transform: "translateZ(0)",
+          }}
+        >
+          {/* Blur background for text area */}
+          <div className="absolute -inset-6 -z-10 rounded-xl bg-black/30 backdrop-blur-md w-[calc(100%+3rem)]"></div>
+
+          {/* Content with padding to account for blur background */}
+          <div className="p-6 w-full">
+            {/* Subtle introduction */}
+            <motion.div
+              className="mb-2 text-xl md:text-2xl text-muted-foreground font-light"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              Hi, I'm
+            </motion.div>
+
+            {/* Prominent name with highlight effect */}
+            <div className="relative">
+              <motion.h1
+                className="text-5xl md:text-7xl font-bold tracking-tight text-white"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                onMouseEnter={() => setIsNameHovered(true)}
+                onMouseLeave={() => setIsNameHovered(false)}
+              >
+                Lesmon Andres
+              </motion.h1>
+
+              {/* Animated underline that appears after page load */}
+              <motion.div
+                className="h-[3px] bg-gradient-to-r from-primary/80 via-primary to-primary/80"
+                initial={{ width: 0 }}
+                animate={{ width: nameAnimationComplete ? "100%" : "0%" }}
+                transition={{ duration: 1.2, ease: "easeInOut", delay: 1.2 }}
+              />
+
+              {/* Soft glow animation */}
+              <motion.div
+                className="absolute -inset-4 -z-10 rounded-lg bg-primary/5 opacity-0 blur-xl"
+                animate={{
+                  opacity: [0, 0.6, 0],
+                  scale: [0.9, 1.05, 0.9],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatType: "reverse",
+                }}
+              />
+            </div>
+
+            {/* Title section with its own independent hover effect */}
+            <motion.div
+              className="mt-6"
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: isMobile ? 0 : 0.7, duration: isMobile ? 0.1 : 0.6 }}
+              whileHover={
+                isMobile
+                  ? {}
+                  : {
+                      scale: 1.02,
+                      transition: { duration: 0.3 },
+                    }
+              }
+            >
+              <div className="font-outfit text-xl md:text-2xl font-medium tracking-wide">
+                <div className="flex flex-col items-start justify-start space-y-3">
+                  {skillItems.map((skill, index) => (
+                    <motion.div
+                      key={index}
+                      className={`flex items-center ${skill.color}`}
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <span className="mr-2">{skill.icon}</span>
+                      <span>{skill.text}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Brief bio text */}
+            <motion.p
+              className="mt-6 max-w-full text-muted-foreground"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+            >
+              Passionate about leveraging technology to solve complex problems and build innovative solutions that make
+              a difference.
+            </motion.p>
+          </div>
+        </motion.div>
+      </div>
     </motion.section>
   )
 }
