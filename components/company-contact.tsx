@@ -107,9 +107,9 @@ export default function CompanyContact({ bscaleUrl = "#" }: CompanyContactProps)
 
             {/* Content - now with "Need tech solution for your business?" as the heading */}
             <div className="flex-1 text-center md:text-left">
-              <h3 className="text-2xl font-medium mb-3">Need tech solution for your business?</h3>
+              <h3 className="text-2xl font-medium mb-3">Need tech solutions for your business?</h3>
               <p className="text-lg font-light text-muted-foreground mb-4">
-                Let's supercharge your business with modern technology. Don't get left behind.
+                Let's supercharge your business with modern technology. At Bscale, you'll never fall behind.
               </p>
 
               <motion.div

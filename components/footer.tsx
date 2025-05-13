@@ -5,8 +5,9 @@ import { useInView } from "framer-motion"
 import { useRef } from "react"
 import TechCorners from "./tech-corners"
 import Link from "next/link"
-import { ArrowUp, Github, Linkedin, Twitter, Instagram, Facebook, ArrowRight } from "lucide-react"
+import { ArrowUp, Github, Linkedin, Twitter, Instagram, Facebook, ArrowRight, Mail } from "lucide-react"
 import Image from "next/image"
+import { useMobile } from "@/hooks/use-mobile"
 
 interface FooterProps {
   linkedinUrl?: string
@@ -15,6 +16,7 @@ interface FooterProps {
   instagramUrl?: string
   githubUrl?: string
   bscaleUrl?: string
+  emailAddress?: string
 }
 
 export default function Footer({
@@ -24,9 +26,11 @@ export default function Footer({
   instagramUrl = "https://instagram.com",
   githubUrl = "https://github.com",
   bscaleUrl = "#",
+  emailAddress = "lesmon@bscale.tech",
 }: FooterProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.3 })
+  const isMobile = useMobile()
 
   const currentYear = new Date().getFullYear()
 
@@ -43,28 +47,29 @@ export default function Footer({
     },
   ]
 
-  // Updated social links with icons - now including Facebook
+  // Updated social links with icons - now including Email
   const socialLinks = [
     { name: "LinkedIn", href: linkedinUrl, icon: <Linkedin className="h-4 w-4 mr-2" /> },
     { name: "Twitter", href: twitterUrl, icon: <Twitter className="h-4 w-4 mr-2" /> },
     { name: "Facebook", href: facebookUrl, icon: <Facebook className="h-4 w-4 mr-2" /> },
     { name: "Instagram", href: instagramUrl, icon: <Instagram className="h-4 w-4 mr-2" /> },
     { name: "GitHub", href: githubUrl, icon: <Github className="h-4 w-4 mr-2" /> },
+    { name: "Email", href: `mailto:${emailAddress}`, icon: <Mail className="h-4 w-4 mr-2" /> },
   ]
 
   return (
     <footer ref={ref} className="relative z-20 border-t border-primary/20 bg-black/40 backdrop-blur-md">
-      <div className="container mx-auto px-4 py-8 md:py-12">
+      <div className="container mx-auto px-4 md:px-4 py-8 md:py-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {/* Brand Section - Removed social buttons */}
+          {/* Brand Section */}
           <motion.div
-            className="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1"
+            className="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 text-left pl-2 md:pl-0"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <div className="mb-4 flex items-center justify-center sm:justify-start">
+            <div className="mb-4 flex items-center justify-start">
               <div className="relative mr-3 h-10 w-10 overflow-hidden">
                 <Image
                   src="/la-logo.png"
@@ -76,22 +81,22 @@ export default function Footer({
               </div>
               <span className="text-xl md:text-2xl font-semibold tracking-tight">Lesmon Andres</span>
             </div>
-            <p className="text-center sm:text-left text-sm text-muted-foreground">
+            <p className="text-left text-sm text-muted-foreground">
               Building innovative tech solutions and connecting people with technology that matters.
             </p>
           </motion.div>
 
-          {/* Links Sections - Wrapped in a container for mobile */}
+          {/* Links Sections */}
           <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:grid-cols-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {/* Navigation Links */}
+            {/* Navigation Links - Fixed arrow issue */}
             <motion.div
-              className="col-span-1"
+              className="col-span-1 text-left pl-2 md:pl-0"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h3 className="mb-4 text-center sm:text-left text-lg font-medium">Navigation</h3>
-              <ul className="space-y-2 text-center sm:text-left">
+              <h3 className="mb-4 text-left text-lg font-medium">Navigation</h3>
+              <ul className="space-y-2">
                 {footerLinks[0].links.map((link, linkIndex) => (
                   <motion.li
                     key={link.name}
@@ -101,25 +106,29 @@ export default function Footer({
                   >
                     <Link
                       href={link.href}
-                      className="group flex items-center justify-center sm:justify-start text-sm text-muted-foreground transition-colors hover:text-primary"
+                      className="group relative flex items-center text-sm text-muted-foreground transition-colors hover:text-primary"
                     >
-                      <span className="mr-2 text-primary opacity-0 transition-opacity group-hover:opacity-100">›</span>
-                      {link.name}
+                      {/* Arrow that only appears on hover */}
+                      <span className="absolute left-0 text-primary opacity-0 transition-all duration-200 group-hover:opacity-100">
+                        ›
+                      </span>
+                      {/* Text that slides right on hover */}
+                      <span className="transition-transform duration-200 group-hover:translate-x-5">{link.name}</span>
                     </Link>
                   </motion.li>
                 ))}
               </ul>
             </motion.div>
 
-            {/* Social Links - Updated to have icons beside text */}
+            {/* Social Links */}
             <motion.div
-              className="col-span-1"
+              className="col-span-1 text-left pl-2 md:pl-0"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <h3 className="mb-4 text-center sm:text-left text-lg font-medium">Social</h3>
-              <ul className="space-y-3 text-center sm:text-left">
+              <h3 className="mb-4 text-left text-lg font-medium">Social</h3>
+              <ul className="space-y-3">
                 {socialLinks.map((link, linkIndex) => (
                   <motion.li
                     key={link.name}
@@ -131,7 +140,7 @@ export default function Footer({
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex w-full items-center justify-center sm:justify-start text-sm text-muted-foreground transition-all duration-200 hover:text-primary"
+                      className="group flex w-full items-center justify-start text-sm text-muted-foreground transition-all duration-200 hover:text-primary"
                       whileHover={{ x: 3 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -155,16 +164,16 @@ export default function Footer({
 
           {/* Contact Section */}
           <motion.div
-            className="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1"
+            className="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 text-left pl-2 md:pl-0"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <h3 className="mb-4 text-center sm:text-left text-lg font-medium">Contact</h3>
-            <p className="mb-4 text-center sm:text-left text-sm text-muted-foreground">
+            <h3 className="mb-4 text-left text-lg font-medium">Contact</h3>
+            <p className="mb-4 text-left text-sm text-muted-foreground">
               Interested in working together? Reach out through Bscale or connect directly.
             </p>
-            <div className="flex justify-center sm:justify-start">
+            <div className="flex justify-start">
               <motion.a
                 href={bscaleUrl}
                 target="_blank"
@@ -181,9 +190,9 @@ export default function Footer({
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 md:mt-12 flex flex-col items-center justify-between border-t border-primary/10 pt-6 md:flex-row">
+        <div className="mt-8 md:mt-12 flex flex-col items-start md:flex-row md:items-center md:justify-between border-t border-primary/10 pt-6 pl-2 md:pl-0">
           <motion.p
-            className="mb-4 text-center text-xs sm:text-sm text-muted-foreground md:mb-0 md:text-left"
+            className="mb-4 text-left text-xs sm:text-sm text-muted-foreground md:mb-0"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}

@@ -214,6 +214,7 @@ export default function FloatingImages() {
     { width: 260, height: 260 }, // Slightly smaller
     { width: 240, height: 240 }, // Even smaller
     { width: 220, height: 220 }, // Smallest
+    { width: 200, height: 200 }, // Extra small for mobile
   ]
 
   // Images configuration - alternating left-right pattern with responsive positioning
@@ -225,7 +226,7 @@ export default function FloatingImages() {
       initialX: "12%", // Left side - adjusted for spacing
       initialY: "8%", // Higher up - adjusted for spacing
       size: standardSizes[0],
-      mobilePosition: { x: "8%", y: "6%" },
+      mobilePosition: { x: "5%", y: "6%" },
     },
     {
       src: "/floating-image-2.png",
@@ -233,7 +234,7 @@ export default function FloatingImages() {
       initialX: "70%", // Right side - adjusted for spacing
       initialY: "12%", // Higher up - adjusted for spacing
       size: standardSizes[0],
-      mobilePosition: { x: "65%", y: "10%" },
+      mobilePosition: { x: "75%", y: "10%" },
     },
     {
       src: "/floating-image-3.png",
@@ -241,7 +242,7 @@ export default function FloatingImages() {
       initialX: "5%", // Further left - adjusted for spacing
       initialY: "45%", // Middle - adjusted for spacing
       size: standardSizes[1],
-      mobilePosition: { x: "3%", y: "40%" },
+      mobilePosition: { x: "2%", y: "45%" },
     },
     {
       src: "/floating-image-4.png",
@@ -249,7 +250,7 @@ export default function FloatingImages() {
       initialX: "78%", // Further right - adjusted for spacing
       initialY: "50%", // Middle - adjusted for spacing
       size: standardSizes[1],
-      mobilePosition: { x: "70%", y: "45%" },
+      mobilePosition: { x: "80%", y: "45%" },
     },
     {
       src: "/floating-image-5.png", // New image
@@ -265,7 +266,7 @@ export default function FloatingImages() {
       initialX: "22%", // Left-center - adjusted for spacing
       initialY: "28%", // Upper middle - adjusted for spacing
       size: standardSizes[3],
-      mobilePosition: { x: "18%", y: "25%" },
+      mobilePosition: { x: "15%", y: "25%" },
     },
     {
       src: "/floating-image-7.png", // New image
@@ -273,7 +274,7 @@ export default function FloatingImages() {
       initialX: "60%", // Right-center - adjusted for spacing
       initialY: "33%", // Upper middle - adjusted for spacing
       size: standardSizes[3],
-      mobilePosition: { x: "55%", y: "30%" },
+      mobilePosition: { x: "65%", y: "30%" },
     },
   ]
 
@@ -290,8 +291,8 @@ export default function FloatingImages() {
         // Adjust size for mobile
         const imageSize = isMobile
           ? {
-              width: image.size.width * 0.7,
-              height: image.size.height * 0.7,
+              width: image.size.width * 0.6, // Reduced from 0.7 to 0.6 for better fit
+              height: image.size.height * 0.6,
             }
           : image.size
 

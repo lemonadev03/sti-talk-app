@@ -93,6 +93,7 @@ export default function ProfileSection() {
       src: "/lesmon-speaking-1.png",
       alt: "Lesmon speaking at an event",
       position: { x: -200, y: 0 }, // Left side
+      mobilePosition: { x: -160, y: 0 }, // Better balanced on mobile
       rotation: -5,
       delay: 0.1,
       zIndex: -1, // Behind main image
@@ -101,11 +102,17 @@ export default function ProfileSection() {
       src: "/lesmon-speaking-2.png",
       alt: "Lesmon at AWS event",
       position: { x: 200, y: 0 }, // Right side
+      mobilePosition: { x: 160, y: 0 }, // Better balanced on mobile
       rotation: 5,
       delay: 0.2,
       zIndex: -1, // Behind main image
     },
   ]
+
+  // Calculate main image size based on device
+  const mainImageSize = isMobile ? 220 : 280
+  // Calculate side image size based on device
+  const sideImageSize = isMobile ? 150 : 180
 
   return (
     <motion.section
@@ -138,14 +145,19 @@ export default function ProfileSection() {
             <motion.div
               key={index}
               className="absolute z-0"
-              style={{ zIndex: img.zIndex }}
+              style={{
+                zIndex: img.zIndex,
+                // Center the side images vertically with the main image
+                top: `calc(50% - ${sideImageSize / 2}px)`,
+                // Position left or right based on index
+                left: index === 0 ? `calc(50% - ${mainImageSize / 2}px - ${sideImageSize}px - 10px)` : "auto",
+                right: index === 1 ? `calc(50% - ${mainImageSize / 2}px - ${sideImageSize}px - 10px)` : "auto",
+              }}
               initial={
                 isMobile
                   ? {
-                      x: img.position.x,
-                      y: img.position.y,
-                      scale: 0.9,
                       opacity: 0.7,
+                      scale: 0.9,
                       rotate: img.rotation,
                     }
                   : {
@@ -157,10 +169,8 @@ export default function ProfileSection() {
                     }
               }
               animate={{
-                x: img.position.x,
-                y: img.position.y,
-                scale: 0.9,
                 opacity: 0.7,
+                scale: 0.9,
                 rotate: img.rotation,
               }}
               transition={
@@ -187,20 +197,32 @@ export default function ProfileSection() {
                     }
               }
             >
-              <div className="relative h-[180px] w-[180px] overflow-hidden">
+              <div
+                className="relative overflow-hidden"
+                style={{
+                  height: `${sideImageSize}px`,
+                  width: `${sideImageSize}px`,
+                }}
+              >
                 <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} animated={!isMobile} />
                 <Image
                   src={img.src || "/placeholder.svg"}
                   alt={img.alt}
-                  width={180}
-                  height={180}
+                  width={sideImageSize}
+                  height={sideImageSize}
                   className="h-full w-full object-cover"
                 />
               </div>
             </motion.div>
           ))}
 
-        <div className="relative h-[280px] w-[280px] z-10">
+        <div
+          className="relative z-10 mx-auto"
+          style={{
+            height: `${mainImageSize}px`,
+            width: `${mainImageSize}px`,
+          }}
+        >
           {/* Animated tech corners for profile image */}
           <motion.div
             initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
@@ -227,8 +249,8 @@ export default function ProfileSection() {
               ref={imageRef}
               src="/lesmon-aws.png"
               alt="Lesmon Andres"
-              width={276}
-              height={276}
+              width={mainImageSize - 4}
+              height={mainImageSize - 4}
               className="h-full w-full object-cover"
               priority
               onLoad={() => setImageLoaded(true)}

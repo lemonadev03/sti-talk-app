@@ -6,12 +6,14 @@ import TechCorners from "./tech-corners"
 import { useScrollContext } from "./scroll-provider"
 import { useInView } from "framer-motion"
 import { useMobile } from "@/hooks/use-mobile"
+import { Mail } from "lucide-react"
 
 interface SocialLinksProps {
   linkedinUrl?: string
   twitterUrl?: string
   facebookUrl?: string
   instagramUrl?: string
+  emailAddress?: string
 }
 
 export default function SocialLinks({
@@ -19,6 +21,7 @@ export default function SocialLinks({
   twitterUrl = "https://x.com/lesmonandres",
   facebookUrl = "https://www.facebook.com/lesmonandres/",
   instagramUrl = "https://instagram.com/lesmonandres",
+  emailAddress = "lesmon@bscale.tech",
 }: SocialLinksProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.3 })
@@ -87,6 +90,13 @@ export default function SocialLinks({
       color: "bg-[#E4405F]",
       hoverBg: "group-hover:bg-[#E4405F]",
     },
+    {
+      name: "Email",
+      icon: <Mail className="h-8 w-8" />,
+      href: `mailto:${emailAddress}`,
+      color: "bg-[#4589ff]",
+      hoverBg: "group-hover:bg-[#4589ff]",
+    },
   ]
 
   const containerVariants = {
@@ -148,7 +158,17 @@ export default function SocialLinks({
       </motion.div>
 
       <motion.div
-        className="grid grid-cols-2 gap-4 sm:gap-8 sm:grid-cols-4"
+        className="grid gap-4 sm:gap-8"
+        style={{
+          // Custom grid layout for mobile: 2-2-1
+          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(5, 1fr)",
+          // For the last item on mobile, make it span 2 columns to center it
+          gridTemplateAreas: isMobile
+            ? `"a b"
+             "c d"
+             "e e"`
+            : `"a b c d e"`,
+        }}
         initial="hidden"
         animate="visible"
         variants={isMobile ? mobileContainerVariants : containerVariants}
@@ -157,6 +177,14 @@ export default function SocialLinks({
           // Use hardware acceleration
           transform: "translateZ(0)",
           willChange: isMobile ? "auto" : "transform",
+          // Custom grid layout for mobile: 2-2-1
+          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(5, 1fr)",
+          // For the last item on mobile, make it span 2 columns to center it
+          gridTemplateAreas: isMobile
+            ? `"a b"
+             "c d"
+             "e e"`
+            : `"a b c d e"`,
         }}
       >
         {socialLinks.map((link, index) => (
@@ -166,6 +194,10 @@ export default function SocialLinks({
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex flex-col items-center justify-center border border-border bg-black/30 p-6 sm:p-8 shadow-sm backdrop-blur-sm"
+            style={{
+              // Assign grid areas based on index
+              gridArea: String.fromCharCode(97 + index), // 'a', 'b', 'c', 'd', 'e'
+            }}
             whileHover={
               isMobile
                 ? {}

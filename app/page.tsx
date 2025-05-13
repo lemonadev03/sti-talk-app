@@ -30,6 +30,7 @@ const FACEBOOK_URL = "https://facebook.com/lesmonandres"
 const INSTAGRAM_URL = "https://instagram.com/lesmonandres"
 const GITHUB_URL = "https://github.com/lemonadev03"
 const BSCALE_URL = "https://bscale.tech"
+const EMAIL_ADDRESS = "lesmon@bscale.tech"
 
 export default function Home() {
   return (
@@ -81,6 +82,7 @@ export default function Home() {
                   twitterUrl={TWITTER_URL}
                   facebookUrl={FACEBOOK_URL}
                   instagramUrl={INSTAGRAM_URL}
+                  emailAddress={EMAIL_ADDRESS}
                 />
               </div>
               <div id="contact">
@@ -98,6 +100,7 @@ export default function Home() {
             instagramUrl={INSTAGRAM_URL}
             githubUrl={GITHUB_URL}
             bscaleUrl={BSCALE_URL}
+            emailAddress={EMAIL_ADDRESS}
           />
         </main>
       </ScrollProvider>
