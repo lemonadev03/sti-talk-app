@@ -131,7 +131,7 @@ export default function ProfileSection() {
       <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full max-w-7xl mx-auto">
         {/* Image group container - includes space for side images */}
         <div
-          className="relative flex justify-center items-center md:w-[35%]"
+          className={`relative flex justify-center items-center ${isMobile ? "mt-32 mb-8" : "md:w-[35%]"}`}
           style={{ width: isMobile ? "auto" : `${mainImageSize + (sideImageSize * 2) + 80}px` }}
         >
           {/* Profile image with square tech style */}
@@ -156,13 +156,13 @@ export default function ProfileSection() {
             {/* Left side images - now positioned with fixed offsets */}
             {showExtraImages && (
               <>
-                {/* Top left image - moved down to create more space */}
+                {/* Top left image - adjusted for mobile */}
                 <motion.div
                   className="absolute z-0"
                   style={{
                     zIndex: -1,
                     left: isMobile ? `calc(-${sideImageSize}px - 10px)` : `-${sideImageSize + 20}px`,
-                    top: isMobile ? "0" : "-10px", // Changed from -40px to -10px to move it down
+                    top: isMobile ? "30px" : "-10px", // Adjusted for mobile to move down
                   }}
                   initial={
                     isMobile
@@ -226,14 +226,14 @@ export default function ProfileSection() {
                   </div>
                 </motion.div>
 
-                {/* Bottom left image - moved up to create more space */}
+                {/* Bottom left image - adjusted for mobile */}
                 <motion.div
                   className="absolute z-0"
                   style={{
                     zIndex: -1,
                     left: isMobile ? "auto" : `-${sideImageSize + 40}px`,
                     right: isMobile ? `calc(-${sideImageSize}px - 10px)` : "auto",
-                    top: isMobile ? "0" : "120px", // Changed from 50px to 120px to move it down more
+                    top: isMobile ? "30px" : "120px", // Adjusted for mobile to move down
                   }}
                   initial={
                     isMobile
