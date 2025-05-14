@@ -167,24 +167,14 @@ export default function SocialLinks({
              "c d"
              "e e"`
             : `"a b c d e"`,
-        }}
-        initial="hidden"
-        animate="visible"
-        variants={isMobile ? mobileContainerVariants : containerVariants}
-        style={{
           y: isMobile ? 0 : containerY,
           // Use hardware acceleration
           transform: "translateZ(0)",
           willChange: isMobile ? "auto" : "transform",
-          // Custom grid layout for mobile: 2-2-1
-          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(5, 1fr)",
-          // For the last item on mobile, make it span 2 columns to center it
-          gridTemplateAreas: isMobile
-            ? `"a b"
-             "c d"
-             "e e"`
-            : `"a b c d e"`,
         }}
+        initial="hidden"
+        animate="visible"
+        variants={isMobile ? mobileContainerVariants : containerVariants}
       >
         {socialLinks.map((link, index) => (
           <motion.a
@@ -197,29 +187,11 @@ export default function SocialLinks({
               // Assign grid areas based on index
               gridArea: String.fromCharCode(97 + index), // 'a', 'b', 'c', 'd', 'e'
             }}
-            whileHover={
-              isMobile
-                ? {}
-                : {
-                    scale: 1.08,
-                    y: -10,
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    borderColor: "rgba(66, 153, 225, 0.5)",
-                    boxShadow: "0 20px 30px -10px rgba(0, 0, 0, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.1)",
-                    transition: transition,
-                  }
-            }
-            whileTap={{
-              scale: 0.95,
-              transition: transition,
-            }}
-            // No animation on mobile
-            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: isMobile ? 0.1 : 0.4,
-              delay: isMobile ? 0 : 0.1 + index * 0.05,
-              ease: "easeOut",
+            whileHover={isMobile ? {} : {
+              scale: 1.05,
+              boxShadow: "0 8px 24px rgba(66, 153, 225, 0.15)",
+              borderColor: "#4589ff",
+              transition: { duration: 0.2 },
             }}
           >
             {/* Tech corners for each social link - disable animation on mobile */}

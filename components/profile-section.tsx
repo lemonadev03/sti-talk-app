@@ -24,6 +24,13 @@ export default function ProfileSection() {
 
   // Tech loading animation
   useEffect(() => {
+    if (isMobile) {
+      setCornerSize(220)
+      setImageOpacity(1)
+      setShowExtraImages(true)
+      setNameAnimationComplete(true)
+      return
+    }
     // Start with small corners
     setCornerSize(0)
 
@@ -53,7 +60,7 @@ export default function ProfileSection() {
       clearTimeout(extraImagesTimer)
       clearTimeout(nameAnimTimer)
     }
-  }, [])
+  }, [isMobile])
 
   // Update values based on scroll position using RAF for smooth animation
   useEffect(() => {

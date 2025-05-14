@@ -63,152 +63,253 @@ export default function Footer({
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {/* Brand Section */}
-          <motion.div
-            className="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 text-left pl-2 md:pl-0"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <div className="mb-4 flex items-center justify-start">
-              <div className="relative mr-3 h-10 w-10 overflow-hidden">
-                <Image
-                  src="/la-logo.png"
-                  alt="LA Logo"
-                  width={40}
-                  height={40}
-                  className="h-full w-full object-contain"
-                />
+          {isMobile ? (
+            <div className="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 text-left pl-2 md:pl-0">
+              <div className="mb-4 flex items-center justify-start">
+                <div className="relative mr-3 h-10 w-10 overflow-hidden">
+                  <Image
+                    src="/la-logo.png"
+                    alt="LA Logo"
+                    width={40}
+                    height={40}
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+                <span className="text-xl md:text-2xl font-semibold tracking-tight">Lesmon Andres</span>
               </div>
-              <span className="text-xl md:text-2xl font-semibold tracking-tight">Lesmon Andres</span>
+              <p className="text-left text-sm text-muted-foreground">
+                Building innovative tech solutions and connecting people with technology that matters.
+              </p>
             </div>
-            <p className="text-left text-sm text-muted-foreground">
-              Building innovative tech solutions and connecting people with technology that matters.
-            </p>
-          </motion.div>
+          ) : (
+            <motion.div
+              className="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 text-left pl-2 md:pl-0"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="mb-4 flex items-center justify-start">
+                <div className="relative mr-3 h-10 w-10 overflow-hidden">
+                  <Image
+                    src="/la-logo.png"
+                    alt="LA Logo"
+                    width={40}
+                    height={40}
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+                <span className="text-xl md:text-2xl font-semibold tracking-tight">Lesmon Andres</span>
+              </div>
+              <p className="text-left text-sm text-muted-foreground">
+                Building innovative tech solutions and connecting people with technology that matters.
+              </p>
+            </motion.div>
+          )}
 
           {/* Links Sections */}
           <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:grid-cols-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
             {/* Navigation Links - Fixed arrow issue */}
-            <motion.div
-              className="col-span-1 text-left pl-2 md:pl-0"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <h3 className="mb-4 text-left text-lg font-medium">Navigation</h3>
-              <ul className="space-y-2">
-                {footerLinks[0].links.map((link, linkIndex) => (
-                  <motion.li
-                    key={link.name}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-                    transition={{ duration: 0.3, delay: 0.3 + linkIndex * 0.05 }}
-                  >
-                    <Link
-                      href={link.href}
-                      className="group relative flex items-center text-sm text-muted-foreground transition-colors hover:text-primary"
+            {isMobile ? (
+              <div className="col-span-1 text-left pl-2 md:pl-0">
+                <h3 className="mb-4 text-left text-lg font-medium">Navigation</h3>
+                <ul className="space-y-2">
+                  {footerLinks[0].links.map((link) => (
+                    <li key={link.name}>
+                      <Link
+                        href={link.href}
+                        className="group relative flex items-center text-sm text-muted-foreground transition-colors hover:text-primary"
+                      >
+                        <span className="absolute left-0 text-primary opacity-0 transition-all duration-200 group-hover:opacity-100">
+                          ›
+                        </span>
+                        <span className="transition-transform duration-200 group-hover:translate-x-5">{link.name}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <motion.div
+                className="col-span-1 text-left pl-2 md:pl-0"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <h3 className="mb-4 text-left text-lg font-medium">Navigation</h3>
+                <ul className="space-y-2">
+                  {footerLinks[0].links.map((link, linkIndex) => (
+                    <motion.li
+                      key={link.name}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+                      transition={{ duration: 0.3, delay: 0.3 + linkIndex * 0.05 }}
                     >
-                      {/* Arrow that only appears on hover */}
-                      <span className="absolute left-0 text-primary opacity-0 transition-all duration-200 group-hover:opacity-100">
-                        ›
-                      </span>
-                      {/* Text that slides right on hover */}
-                      <span className="transition-transform duration-200 group-hover:translate-x-5">{link.name}</span>
-                    </Link>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+                      <Link
+                        href={link.href}
+                        className="group relative flex items-center text-sm text-muted-foreground transition-colors hover:text-primary"
+                      >
+                        <span className="absolute left-0 text-primary opacity-0 transition-all duration-200 group-hover:opacity-100">
+                          ›
+                        </span>
+                        <span className="transition-transform duration-200 group-hover:translate-x-5">{link.name}</span>
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
 
             {/* Social Links */}
-            <motion.div
-              className="col-span-1 text-left pl-2 md:pl-0"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <h3 className="mb-4 text-left text-lg font-medium">Social</h3>
-              <ul className="space-y-2">
-                {socialLinks.map((link, linkIndex) => (
-                  <motion.li
-                    key={link.name}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-                    transition={{ duration: 0.3, delay: 0.4 + linkIndex * 0.05 }}
-                  >
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative flex items-center text-sm text-muted-foreground transition-colors hover:text-primary"
+            {isMobile ? (
+              <div className="col-span-1 text-left pl-2 md:pl-0">
+                <h3 className="mb-4 text-left text-lg font-medium">Social</h3>
+                <ul className="space-y-2">
+                  {socialLinks.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative flex items-center text-sm text-muted-foreground transition-colors hover:text-primary"
+                      >
+                        <span className="absolute left-0 text-primary opacity-0 transition-all duration-200 group-hover:opacity-100">
+                          ›
+                        </span>
+                        <span className="flex items-center transition-transform duration-200 group-hover:translate-x-5">
+                          {link.icon}
+                          {link.name}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <motion.div
+                className="col-span-1 text-left pl-2 md:pl-0"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <h3 className="mb-4 text-left text-lg font-medium">Social</h3>
+                <ul className="space-y-2">
+                  {socialLinks.map((link, linkIndex) => (
+                    <motion.li
+                      key={link.name}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+                      transition={{ duration: 0.3, delay: 0.4 + linkIndex * 0.05 }}
                     >
-                      {/* Arrow that only appears on hover */}
-                      <span className="absolute left-0 text-primary opacity-0 transition-all duration-200 group-hover:opacity-100">
-                        ›
-                      </span>
-                      {/* Text that slides right on hover */}
-                      <span className="flex items-center transition-transform duration-200 group-hover:translate-x-5">
-                        {link.icon}
-                        {link.name}
-                      </span>
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative flex items-center text-sm text-muted-foreground transition-colors hover:text-primary"
+                      >
+                        <span className="absolute left-0 text-primary opacity-0 transition-all duration-200 group-hover:opacity-100">
+                          ›
+                        </span>
+                        <span className="flex items-center transition-transform duration-200 group-hover:translate-x-5">
+                          {link.icon}
+                          {link.name}
+                        </span>
+                      </a>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
           </div>
 
           {/* Contact Section */}
-          <motion.div
-            className="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 text-left pl-2 md:pl-0"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <h3 className="mb-4 text-left text-lg font-medium">Contact</h3>
-            <p className="mb-4 text-left text-sm text-muted-foreground">
-              Interested in working together? Reach out through Bscale or connect directly.
-            </p>
-            <div className="flex justify-start">
-              <motion.a
-                href={bscaleUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative inline-flex items-center bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-all duration-300 hover:bg-primary hover:text-white"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} />
-                <span>Contact via Bscale</span>
-              </motion.a>
+          {isMobile ? (
+            <div className="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 text-left pl-2 md:pl-0">
+              <h3 className="mb-4 text-left text-lg font-medium">Contact</h3>
+              <p className="mb-4 text-left text-sm text-muted-foreground">
+                Interested in working together? Reach out through Bscale or connect directly.
+              </p>
+              <div className="flex justify-start">
+                <a
+                  href={bscaleUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-flex items-center bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-all duration-300 hover:bg-primary hover:text-white"
+                >
+                  <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} />
+                  <span>Contact via Bscale</span>
+                </a>
+              </div>
             </div>
-          </motion.div>
+          ) : (
+            <motion.div
+              className="col-span-1 sm:col-span-2 md:col-span-1 lg:col-span-1 text-left pl-2 md:pl-0"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <h3 className="mb-4 text-left text-lg font-medium">Contact</h3>
+              <p className="mb-4 text-left text-sm text-muted-foreground">
+                Interested in working together? Reach out through Bscale or connect directly.
+              </p>
+              <div className="flex justify-start">
+                <motion.a
+                  href={bscaleUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-flex items-center bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-all duration-300 hover:bg-primary hover:text-white"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} />
+                  <span>Contact via Bscale</span>
+                </motion.a>
+              </div>
+            </motion.div>
+          )}
         </div>
 
         {/* Bottom Bar */}
         <div className="mt-8 md:mt-12 flex flex-col items-start md:flex-row md:items-center md:justify-between border-t border-primary/10 pt-6 pl-2 md:pl-0">
-          <motion.p
-            className="mb-4 text-left text-xs sm:text-sm text-muted-foreground md:mb-0"
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            © {currentYear} Lesmon Andres. All rights reserved.
-          </motion.p>
-          <motion.div
-            className="flex items-center space-x-4"
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
-            <Link
-              href="#home"
-              className="group flex items-center text-xs sm:text-sm text-muted-foreground hover:text-primary"
+          {isMobile ? (
+            <p className="mb-4 text-left text-xs sm:text-sm text-muted-foreground md:mb-0">
+              © {currentYear} Lesmon Andres. All rights reserved.
+            </p>
+          ) : (
+            <motion.p
+              className="mb-4 text-left text-xs sm:text-sm text-muted-foreground md:mb-0"
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
             >
-              <ArrowUp className="mr-1 h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:-translate-y-1" />
-              Back to top
-            </Link>
-          </motion.div>
+              © {currentYear} Lesmon Andres. All rights reserved.
+            </motion.p>
+          )}
+          {isMobile ? (
+            <div className="flex items-center space-x-4">
+              <Link
+                href="#home"
+                className="group flex items-center text-xs sm:text-sm text-muted-foreground hover:text-primary"
+              >
+                <ArrowUp className="mr-1 h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:-translate-y-1" />
+                Back to top
+              </Link>
+            </div>
+          ) : (
+            <motion.div
+              className="flex items-center space-x-4"
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <Link
+                href="#home"
+                className="group flex items-center text-xs sm:text-sm text-muted-foreground hover:text-primary"
+              >
+                <ArrowUp className="mr-1 h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:-translate-y-1" />
+                Back to top
+              </Link>
+            </motion.div>
+          )}
         </div>
 
         {/* Tech Pattern */}

@@ -13,6 +13,7 @@ export default function WipSection() {
   const { scrollPosition } = useScrollContext()
   const [titleY, setTitleY] = useState(0)
   const [containerY, setContainerY] = useState(0)
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
   // Update values based on scroll position using RAF for smooth animation
   useEffect(() => {
@@ -26,35 +27,39 @@ export default function WipSection() {
     return () => cancelAnimationFrame(rafId)
   }, [scrollPosition])
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  }
+  const containerVariants = isMobile
+    ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
+    : {
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2,
+          },
+        },
+      }
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
-  }
+  const itemVariants = isMobile
+    ? { hidden: { y: 0, opacity: 1 }, visible: { y: 0, opacity: 1 } }
+    : {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+          y: 0,
+          opacity: 1,
+          transition: { duration: 0.5, ease: "easeOut" },
+        },
+      }
 
   return (
     <section ref={ref} className="relative z-20 py-16">
       <motion.div
         className="relative mx-auto mb-10 w-fit will-change-transform"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.5, ease: "anticipate" }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        animate={isMobile ? { opacity: 1, y: 0 } : isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: isMobile ? 0.1 : 0.5, ease: "anticipate" }}
         style={{
-          y: titleY,
+          y: isMobile ? 0 : titleY,
           // Use hardware acceleration
           transform: "translateZ(0)",
         }}
@@ -73,16 +78,20 @@ export default function WipSection() {
         className="relative mx-auto max-w-3xl overflow-hidden border border-primary/20 bg-black/30 p-10 backdrop-blur-md will-change-transform"
         variants={containerVariants}
         initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
+        animate={isMobile ? "visible" : isInView ? "visible" : "hidden"}
         style={{
-          y: containerY,
+          y: isMobile ? 0 : containerY,
           // Use hardware acceleration
           transform: "translateZ(0)",
         }}
-        whileHover={{
-          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-          borderColor: "rgba(66, 153, 225, 0.4)",
-        }}
+        whileHover={
+          isMobile
+            ? {}
+            : {
+                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+                borderColor: "rgba(66, 153, 225, 0.4)",
+              }
+        }
       >
         {/* Tech corners */}
         <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={true} />
