@@ -107,7 +107,7 @@ export default function Footer({
           )}
 
           {/* Links Sections */}
-          <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:grid-cols-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:grid-cols-2 grid grid-cols-2 gap-6 sm:gap-8">
             {/* Navigation Links - Fixed arrow issue */}
             {isMobile ? (
               <div className="col-span-1 text-left pl-2 md:pl-0">
