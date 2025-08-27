@@ -67,7 +67,7 @@ export default function SkillsTicker({ skills }: SkillsTickerProps) {
                 className="flex items-center px-6"
                 whileHover={{
                   scale: 1.1,
-                  color: "rgb(66, 153, 225)",
+                  color: "hsl(var(--brand-soft))",
                   transition: { duration: 0.2 },
                 }}
               >

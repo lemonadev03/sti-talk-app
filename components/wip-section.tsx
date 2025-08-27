@@ -66,7 +66,7 @@ export default function WipSection() {
       >
         {/* Enhanced section header */}
         <div className="relative bg-black/40 px-10 py-4 backdrop-blur-md">
-          <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={true} />
+          <TechCorners color="hsl(var(--brand-strong) / 0.8)" strokeWidth={2} animated={true} />
           <h2 className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-4xl font-semibold tracking-tight text-transparent">
             Coming Soon
           </h2>
@@ -89,12 +89,12 @@ export default function WipSection() {
             ? {}
             : {
                 boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                borderColor: "rgba(66, 153, 225, 0.4)",
+                borderColor: "hsl(var(--brand-strong) / 0.4)",
               }
         }
       >
         {/* Tech corners */}
-        <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={true} />
+        <TechCorners color="hsl(var(--brand-strong) / 0.8)" strokeWidth={2} animated={true} />
 
         <div className="absolute -right-16 -top-16 h-64 w-64 rounded-none bg-primary/10 blur-3xl" />
         <div className="absolute -bottom-16 -left-16 h-64 w-64 rounded-none bg-primary/10 blur-3xl" />
@@ -126,17 +126,17 @@ export default function WipSection() {
                 scale: 1.05,
                 y: -8,
                 backgroundColor: "rgba(0, 0, 0, 0.7)",
-                borderColor: "rgba(66, 153, 225, 0.5)",
+                borderColor: "hsl(var(--brand-strong) / 0.5)",
               }}
             >
               {/* Tech corners for card */}
-              <TechCorners color="rgba(66, 153, 225, 0.6)" strokeWidth={1.5} animated={true} />
+              <TechCorners color="hsl(var(--brand-strong) / 0.6)" strokeWidth={1.5} animated={true} />
 
               <motion.div
                 className="mr-4 flex h-14 w-14 items-center justify-center bg-primary/10"
                 whileHover={{
                   rotate: 360,
-                  backgroundColor: "rgba(66, 153, 225, 0.3)",
+                  backgroundColor: "hsl(var(--brand-strong) / 0.3)",
                 }}
                 transition={{ duration: 0.7 }}
               >
@@ -155,11 +155,11 @@ export default function WipSection() {
                 scale: 1.05,
                 y: -8,
                 backgroundColor: "rgba(0, 0, 0, 0.7)",
-                borderColor: "rgba(66, 153, 225, 0.5)",
+                borderColor: "hsl(var(--brand-strong) / 0.5)",
               }}
             >
               {/* Tech corners for card */}
-              <TechCorners color="rgba(66, 153, 225, 0.6)" strokeWidth={1.5} animated={true} />
+              <TechCorners color="hsl(var(--brand-strong) / 0.6)" strokeWidth={1.5} animated={true} />
 
               <motion.div
                 className="mr-4 flex h-14 w-14 items-center justify-center bg-primary/10"

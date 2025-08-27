@@ -235,7 +235,7 @@ export default function Footer({
                   rel="noopener noreferrer"
                   className="group relative inline-flex items-center bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-all duration-300 hover:bg-primary hover:text-white"
                 >
-                  <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} />
+                  <TechCorners color="hsl(var(--brand-strong) / 0.8)" strokeWidth={1.5} />
                   <span>Contact via Bscale</span>
                 </a>
               </div>
@@ -260,7 +260,7 @@ export default function Footer({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} />
+                  <TechCorners color="hsl(var(--brand-strong) / 0.8)" strokeWidth={1.5} />
                   <span>Contact via Bscale</span>
                 </motion.a>
               </div>

@@ -1,10 +1,6 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useRef, useEffect, useState } from "react"
-import TechCorners from "./tech-corners"
-import { useScrollContext } from "./scroll-provider"
-import { useInView } from "framer-motion"
 import { useMobile } from "@/hooks/use-mobile"
 import { Mail } from "lucide-react"
 
@@ -23,27 +19,7 @@ export default function SocialLinks({
   instagramUrl = "https://instagram.com/lesmonandres",
   emailAddress = "lesmon@bscale.tech",
 }: SocialLinksProps) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.3 })
-  const { scrollPosition } = useScrollContext()
-  const [titleY, setTitleY] = useState(0)
-  const [containerY, setContainerY] = useState(0)
   const isMobile = useMobile()
-
-  // Update values based on scroll position using RAF for smooth animation
-  useEffect(() => {
-    // Skip scroll animations on mobile for better performance
-    if (isMobile) return
-
-    const updateValues = () => {
-      setTitleY(-scrollPosition * 15)
-      setContainerY(-scrollPosition * 10)
-    }
-
-    // Use requestAnimationFrame for smoother updates
-    const rafId = requestAnimationFrame(updateValues)
-    return () => cancelAnimationFrame(rafId)
-  }, [scrollPosition, isMobile])
 
   const socialLinks = [
     {
@@ -54,8 +30,8 @@ export default function SocialLinks({
         </svg>
       ),
       href: linkedinUrl,
-      color: "bg-[#0077B5]",
-      hoverBg: "group-hover:bg-[#0077B5]",
+      color: "bg-[hsl(var(--brand-strong))]",
+      hoverBg: "group-hover:bg-[hsl(var(--brand-strong))]",
     },
     {
       name: "Twitter/X",
@@ -65,8 +41,8 @@ export default function SocialLinks({
         </svg>
       ),
       href: twitterUrl,
-      color: "bg-[#1DA1F2]",
-      hoverBg: "group-hover:bg-[#1DA1F2]",
+      color: "bg-[hsl(var(--brand-soft))]",
+      hoverBg: "group-hover:bg-[hsl(var(--brand-soft))]",
     },
     {
       name: "Facebook",
@@ -76,8 +52,8 @@ export default function SocialLinks({
         </svg>
       ),
       href: facebookUrl,
-      color: "bg-[#1877F2]",
-      hoverBg: "group-hover:bg-[#1877F2]",
+      color: "bg-[hsl(var(--brand-strong))]",
+      hoverBg: "group-hover:bg-[hsl(var(--brand-strong))]",
     },
     {
       name: "Instagram",
@@ -87,15 +63,15 @@ export default function SocialLinks({
         </svg>
       ),
       href: instagramUrl,
-      color: "bg-[#E4405F]",
-      hoverBg: "group-hover:bg-[#E4405F]",
+      color: "bg-[hsl(var(--brand-deep))]",
+      hoverBg: "group-hover:bg-[hsl(var(--brand-deep))]",
     },
     {
       name: "Email",
       icon: <Mail className="h-8 w-8" />,
       href: `mailto:${emailAddress}`,
-      color: "bg-[#4589ff]",
-      hoverBg: "group-hover:bg-[#4589ff]",
+      color: "bg-[hsl(var(--brand-strong))]",
+      hoverBg: "group-hover:bg-[hsl(var(--brand-strong))]",
     },
   ]
 
@@ -136,85 +112,43 @@ export default function SocialLinks({
   const transition = isMobile ? mobileTransition : desktopTransition
 
   return (
-    <section ref={ref} className="relative z-20 py-16">
+    <section className="relative z-20 py-16">
       <motion.div
         className="relative mx-auto mb-10 w-fit"
-        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: isMobile ? 0.1 : 0.5, ease: "anticipate" }}
-        style={{
-          y: isMobile ? 0 : titleY,
-          // Use hardware acceleration
-          transform: "translateZ(0)",
-          willChange: isMobile ? "auto" : "transform",
-        }}
+        transition={{ duration: isMobile ? 0.12 : 0.4, ease: "easeOut" }}
       >
-        {/* Enhanced section header - renamed to Let's Connect */}
         <div className="relative px-0 py-0">
           <h2 className="text-6xl font-extrabold text-white">Let's Connect!</h2>
-          <div className="mt-2 h-1 w-full bg-[#4589ff] rounded" />
+          <div className="mt-2 h-1 w-full rounded bg-[hsl(var(--brand-strong))]" />
         </div>
       </motion.div>
 
-      <motion.div
-        className="grid gap-4 sm:gap-8"
-        style={{
-          // Custom grid layout for mobile: 2-2-1
-          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(5, 1fr)",
-          // For the last item on mobile, make it span 2 columns to center it
-          gridTemplateAreas: isMobile
-            ? `"a b"
-             "c d"
-             "e e"`
-            : `"a b c d e"`,
-          y: isMobile ? 0 : containerY,
-          // Use hardware acceleration
-          transform: "translateZ(0)",
-          willChange: isMobile ? "auto" : "transform",
-        }}
-        initial="hidden"
-        animate="visible"
-        variants={isMobile ? mobileContainerVariants : containerVariants}
-      >
-        {socialLinks.map((link, index) => (
+      <div className="mx-auto w-full max-w-xl space-y-4">
+        {socialLinks.map((link) => (
           <motion.a
             key={link.name}
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex flex-col items-center justify-center border border-border bg-black/30 p-6 sm:p-8 shadow-sm backdrop-blur-sm"
-            style={{
-              // Assign grid areas based on index
-              gridArea: String.fromCharCode(97 + index), // 'a', 'b', 'c', 'd', 'e'
-            }}
-            whileHover={isMobile ? {} : {
-              scale: 1.05,
-              boxShadow: "0 8px 24px rgba(66, 153, 225, 0.15)",
-              borderColor: "#4589ff",
-              transition: { duration: 0.2 },
-            }}
+            aria-label={link.name}
+            className="group relative block w-full rounded-xl border border-border bg-secondary/20 px-5 py-4 text-foreground transition-colors hover:bg-secondary/30"
+            whileHover={isMobile ? {} : { scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            {/* Tech corners for each social link - disable animation on mobile */}
-            <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={!isMobile} />
+            <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-primary">
+              <span className="flex h-8 w-8 items-center justify-center">
+                {link.icon}
+              </span>
+            </span>
 
-            <motion.div
-              className={`mb-4 flex h-16 w-16 items-center justify-center bg-primary/10 text-primary ${link.hoverBg} group-hover:text-white`}
-              transition={transition}
-            >
-              {link.icon}
-            </motion.div>
-            <span className="text-lg font-medium">{link.name}</span>
-
-            {/* Animated glow effect on hover - disable on mobile */}
-            {!isMobile && (
-              <motion.div
-                className="absolute inset-0 -z-10 bg-primary/10 blur-xl opacity-0 group-hover:opacity-100"
-                transition={transition}
-              />
-            )}
+            <span className="pointer-events-none block w-full text-center text-lg font-medium">
+              {link.name}
+            </span>
           </motion.a>
         ))}
-      </motion.div>
+      </div>
     </section>
   )
 }

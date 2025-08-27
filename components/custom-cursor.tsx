@@ -104,7 +104,7 @@ export default function CustomCursor() {
           x: mousePosition.x - 20,
           y: mousePosition.y - 20,
           scale: isClicking ? 1.2 : isHovering ? 1.5 : 1,
-          borderColor: isHovering ? "rgba(66, 153, 225, 0.8)" : "rgba(66, 153, 225, 0.5)",
+          borderColor: isHovering ? "hsl(var(--brand-strong) / 0.8)" : "hsl(var(--brand-strong) / 0.5)",
         }}
         transition={cursorTransition}
       />

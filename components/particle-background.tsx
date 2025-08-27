@@ -11,6 +11,15 @@ export default function ParticleBackground() {
   const particlesRef = useRef<Particle[]>([])
   const isDarkMode = theme === "dark"
 
+  // Read CSS brand colors from variables
+  const getBrandColors = useCallback(() => {
+    const root = document.documentElement
+    const styles = getComputedStyle(root)
+    const brandStrong = `hsl(${styles.getPropertyValue("--brand-strong").trim()})`
+    const brandSoft = `hsl(${styles.getPropertyValue("--brand-soft").trim()})`
+    return { brandStrong, brandSoft }
+  }, [])
+
   // Define particle class
   class Particle {
     x: number
@@ -26,13 +35,8 @@ export default function ParticleBackground() {
       this.size = Math.random() * 2 + 1.5 // Slightly larger particles
       this.speedX = (Math.random() - 0.5) * 0.5
       this.speedY = (Math.random() - 0.5) * 0.5
-      this.color = isDarkMode
-        ? Math.random() > 0.5
-          ? "#4589ff"
-          : "#78a9ff"
-        : Math.random() > 0.5
-          ? "#0f62fe"
-          : "#0043ce"
+      const { brandStrong, brandSoft } = getBrandColors()
+      this.color = Math.random() > 0.5 ? brandStrong : brandSoft
     }
 
     update(canvas: HTMLCanvasElement) {
@@ -58,7 +62,7 @@ export default function ParticleBackground() {
   // Initialize particles
   const initParticles = useCallback(
     (canvas: HTMLCanvasElement) => {
-      const particleCount = 80 // Increased count for better visibility
+      const particleCount = 60
       particlesRef.current = []
 
       for (let i = 0; i < particleCount; i++) {
@@ -71,8 +75,8 @@ export default function ParticleBackground() {
   // Draw connections between particles
   const drawConnections = useCallback(
     (ctx: CanvasRenderingContext2D, particles: Particle[]) => {
-      const maxDistance = 150
-      const opacity = isDarkMode ? 0.2 : 0.15 // Increased opacity for better visibility
+      const maxDistance = 140
+      const opacity = isDarkMode ? 0.12 : 0.1
 
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
@@ -81,7 +85,8 @@ export default function ParticleBackground() {
           const distance = Math.sqrt(dx * dx + dy * dy)
 
           if (distance < maxDistance) {
-            ctx.strokeStyle = isDarkMode ? "#4589ff" : "#0f62fe"
+            const { brandStrong } = getBrandColors()
+            ctx.strokeStyle = brandStrong
             ctx.globalAlpha = (1 - distance / maxDistance) * opacity
             ctx.lineWidth = 1
             ctx.beginPath()

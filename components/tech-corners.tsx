@@ -12,7 +12,7 @@ interface TechCornersProps {
 }
 
 export default function TechCorners({
-  color = "rgba(66, 153, 225, 0.8)",
+  color = "hsl(var(--brand-strong) / 0.8)",
   size = 0,
   className = "",
   strokeWidth = 2,
@@ -46,7 +46,7 @@ export default function TechCorners({
   }, [animated, cornerSize])
 
   const actualSize = animated ? animatedSize : cornerSize
-  const actualColor = glowing ? "rgba(66, 153, 225, 1)" : color
+  const actualColor = glowing ? "hsl(var(--brand-strong) / 1)" : color
 
   if (animated) {
     return (

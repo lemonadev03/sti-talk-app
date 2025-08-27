@@ -77,9 +77,13 @@ export default function FloatingImages() {
         y: 0,
         rotate: 0,
         x: 0,
+        skewX: 0,
+        skewY: 0,
         targetY: 0,
         targetRotate: 0,
         targetX: 0,
+        targetSkewX: 0,
+        targetSkewY: 0,
       }))
 
     // Animation loop for smooth transitions
@@ -88,18 +92,22 @@ export default function FloatingImages() {
 
       // Update each transform with smooth interpolation
       transformsRef.current = transformsRef.current.map((transform, index) => {
-        const { targetY, targetRotate, targetX, y, rotate, x } = transform
+        const { targetY, targetRotate, targetX, targetSkewX, targetSkewY, y, rotate, x, skewX, skewY } = transform
 
         // Calculate new values with smooth interpolation
         const newY = y + (targetY - y) * 0.05
         const newRotate = rotate + (targetRotate - rotate) * 0.05
         const newX = x + (targetX - x) * 0.05
+        const newSkewX = skewX + (targetSkewX - skewX) * 0.05
+        const newSkewY = skewY + (targetSkewY - skewY) * 0.05
 
         // Check if we need to continue animating
         if (
           Math.abs(newY - targetY) > 0.01 ||
           Math.abs(newRotate - targetRotate) > 0.01 ||
-          Math.abs(newX - targetX) > 0.01
+          Math.abs(newX - targetX) > 0.01 ||
+          Math.abs(newSkewX - targetSkewX) > 0.01 ||
+          Math.abs(newSkewY - targetSkewY) > 0.01
         ) {
           needsUpdate = true
         }
@@ -108,9 +116,13 @@ export default function FloatingImages() {
           y: newY,
           rotate: newRotate,
           x: newX,
+          skewX: newSkewX,
+          skewY: newSkewY,
           targetY,
           targetRotate,
           targetX,
+          targetSkewX,
+          targetSkewY,
         }
       })
 
@@ -151,6 +163,9 @@ export default function FloatingImages() {
       // Use parallax scroll position for Y movement
       const baseY = parallaxScrollPosition * (40 + index * 10)
       const baseRotate = Math.sin(scrollPosition * Math.PI) * (index % 2 === 0 ? -3 : 3)
+      // Reintroduce subtle skews that alternate
+      const baseSkewX = (index % 2 === 0 ? -6 : 6) + Math.sin(scrollPosition * Math.PI * 1.5) * 2
+      const baseSkewY = (index % 2 === 0 ? 3 : -3) + Math.cos(scrollPosition * Math.PI * 1.2) * 1
       const baseX = Math.sin(scrollPosition * Math.PI * 2) * (5 + index * 2) * (index % 2 === 0 ? 1 : -1)
 
       return {
@@ -158,6 +173,8 @@ export default function FloatingImages() {
         targetY: baseY,
         targetRotate: baseRotate,
         targetX: baseX,
+        targetSkewX: baseSkewX,
+        targetSkewY: baseSkewY,
       }
     })
 
@@ -168,18 +185,22 @@ export default function FloatingImages() {
 
         // Update each transform with smooth interpolation
         transformsRef.current = transformsRef.current.map((transform) => {
-          const { targetY, targetRotate, targetX, y, rotate, x } = transform
+          const { targetY, targetRotate, targetX, targetSkewX, targetSkewY, y, rotate, x, skewX, skewY } = transform
 
           // Calculate new values with smooth interpolation
           const newY = y + (targetY - y) * 0.05
           const newRotate = rotate + (targetRotate - rotate) * 0.05
           const newX = x + (targetX - x) * 0.05
+          const newSkewX = skewX + (targetSkewX - skewX) * 0.05
+          const newSkewY = skewY + (targetSkewY - skewY) * 0.05
 
           // Check if we need to continue animating
           if (
             Math.abs(newY - targetY) > 0.01 ||
             Math.abs(newRotate - targetRotate) > 0.01 ||
-            Math.abs(newX - targetX) > 0.01
+            Math.abs(newX - targetX) > 0.01 ||
+            Math.abs(newSkewX - targetSkewX) > 0.01 ||
+            Math.abs(newSkewY - targetSkewY) > 0.01
           ) {
             needsUpdate = true
           }
@@ -188,9 +209,13 @@ export default function FloatingImages() {
             y: newY,
             rotate: newRotate,
             x: newX,
+            skewX: newSkewX,
+            skewY: newSkewY,
             targetY,
             targetRotate,
             targetX,
+            targetSkewX,
+            targetSkewY,
           }
         })
 
@@ -321,6 +346,8 @@ export default function FloatingImages() {
                     y: transforms.y,
                     rotate: transforms.rotate,
                     x: transforms.x,
+                    skewX: transforms.skewX,
+                    skewY: transforms.skewY,
                   }),
               // Add z-index to control stacking on mobile
               zIndex: isMobile ? images.length - index : 0,

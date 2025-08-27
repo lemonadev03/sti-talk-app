@@ -55,7 +55,7 @@ export default function CompanyContact({ bscaleUrl = "#" }: CompanyContactProps)
         {/* Enhanced section header - now "Contact Bscale" */}
         <div className="relative px-0 py-0">
           <h2 className="text-6xl font-extrabold text-white">Contact Us</h2>
-          <div className="mt-2 h-1 w-full bg-[#4589ff] rounded" />
+          <div className="mt-2 h-1 w-full rounded bg-[hsl(var(--brand-strong))]" />
         </div>
       </motion.div>
 
@@ -83,7 +83,7 @@ export default function CompanyContact({ bscaleUrl = "#" }: CompanyContactProps)
                   boxShadow: "0 25px 35px -12px rgba(0, 0, 0, 0.2), 0 15px 20px -10px rgba(0, 0, 0, 0.1)",
                   y: -8,
                   backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  borderColor: "rgba(66, 153, 225, 0.5)",
+                  borderColor: "hsl(var(--brand-strong) / 0.5)",
                 }
           }
           whileTap={{ scale: 0.98 }}
@@ -96,7 +96,7 @@ export default function CompanyContact({ bscaleUrl = "#" }: CompanyContactProps)
           }}
         >
           {/* Tech corners */}
-          <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={2} animated={!isMobile} />
+          <TechCorners color="hsl(var(--brand-strong) / 0.8)" strokeWidth={2} animated={!isMobile} />
 
           <div className="flex flex-col md:flex-row items-center w-full">
             {/* Bscale Logo */}

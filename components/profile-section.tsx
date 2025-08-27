@@ -222,7 +222,7 @@ export default function ProfileSection() {
                       width: `${sideImageSize}px`,
                     }}
                   >
-                    <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} animated={!isMobile} />
+                    <TechCorners color="hsl(var(--brand-strong) / 0.8)" strokeWidth={1.5} animated={!isMobile} />
                     <Image
                       src="/lesmon-aws.png"
                       alt="Lesmon Andres"
@@ -293,7 +293,7 @@ export default function ProfileSection() {
                       width: `${sideImageSize}px`,
                     }}
                   >
-                    <TechCorners color="rgba(66, 153, 225, 0.8)" strokeWidth={1.5} animated={!isMobile} />
+                    <TechCorners color="hsl(var(--brand-strong) / 0.8)" strokeWidth={1.5} animated={!isMobile} />
                     <Image
                       src="/lesmon-speaking-2.png"
                       alt="Lesmon at AWS event"
@@ -320,7 +320,7 @@ export default function ProfileSection() {
                 transition={{ duration: 0.5 }}
               >
                 <TechCorners
-                  color="rgba(66, 153, 225, 0.8)"
+                  color="hsl(var(--brand-strong) / 0.8)"
                   size={cornerSize}
                   strokeWidth={2}
                   className="absolute inset-0"

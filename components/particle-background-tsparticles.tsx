@@ -72,10 +72,14 @@ export default function ParticleBackgroundTsParticles() {
   if (!mounted) return null
 
   const isDarkMode = theme === "dark"
-
-  // IBM Design Language colors
-  const primaryColor = isDarkMode ? "#4589ff" : "#0f62fe"
-  const secondaryColor = isDarkMode ? "#78a9ff" : "#0043ce"
+  // Read brand colors from CSS variables
+  const getBrandColors = () => {
+    const styles = getComputedStyle(document.documentElement)
+    const brandStrong = `hsl(${styles.getPropertyValue("--brand-strong").trim()})`
+    const brandSoft = `hsl(${styles.getPropertyValue("--brand-soft").trim()})`
+    return { brandStrong, brandSoft }
+  }
+  const { brandStrong: primaryColor, brandSoft: secondaryColor } = getBrandColors()
 
   return (
     <Particles
@@ -96,9 +100,9 @@ export default function ParticleBackgroundTsParticles() {
           },
           links: {
             color: primaryColor,
-            distance: 150,
+            distance: 140,
             enable: true,
-            opacity: isDarkMode ? 0.15 : 0.1,
+            opacity: isDarkMode ? 0.1 : 0.07,
             width: 1,
           },
           move: {
@@ -119,7 +123,7 @@ export default function ParticleBackgroundTsParticles() {
             value: 50, // Reduced particle count for better performance
           },
           opacity: {
-            value: isDarkMode ? 0.3 : 0.2,
+            value: isDarkMode ? 0.18 : 0.14,
           },
           shape: {
             type: "circle",

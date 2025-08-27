@@ -4,34 +4,42 @@
 
 @layer base {
   :root {
-    /* IBM Design Language colors */
-    --background: 220 30% 10%;
-    --foreground: 210 40% 98%;
+    /* Dark-first palette inspired by IBM Blue, tuned darker */
+    /* Brand tokens (HSL parts) */
+    --brand-strong: 219 70% 48%; /* further desaturated */
+    --brand-soft: 220 60% 62%;   /* softened more */
+    --brand-deep: 219 68% 32%;   /* deeper, less intense */
 
-    --card: 220 30% 12%;
-    --card-foreground: 210 40% 98%;
+    /* Surface & content */
+    --background: 220 35% 7%;
+    --foreground: 210 40% 96%;
 
-    --popover: 220 30% 12%;
-    --popover-foreground: 210 40% 98%;
+    --card: 220 35% 9%;
+    --card-foreground: 210 40% 96%;
 
-    --primary: 220 100% 65%;
+    --popover: 220 35% 9%;
+    --popover-foreground: 210 40% 96%;
+
+    /* Primary uses brand strong */
+    --primary: var(--brand-strong);
     --primary-foreground: 220 30% 10%;
 
-    --secondary: 220 70% 55%;
-    --secondary-foreground: 220 30% 10%;
+    /* Secondary/muted/accent are darker surfaces */
+    --secondary: 220 35% 14%;
+    --secondary-foreground: 210 40% 96%;
 
-    --muted: 220 30% 20%;
-    --muted-foreground: 210 20% 70%;
+    --muted: 220 25% 16%;
+    --muted-foreground: 210 20% 72%;
 
-    --accent: 220 30% 20%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 220 40% 18%;
+    --accent-foreground: 210 40% 96%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 30% 20%;
-    --input: 220 30% 20%;
-    --ring: 220 100% 65%;
+    --border: 220 25% 18%;
+    --input: 220 25% 18%;
+    --ring: var(--brand-strong);
   }
 }
 
@@ -60,12 +68,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--primary) / 0.3);
+    background: hsl(var(--brand-strong) / 0.3);
     border-radius: 0; /* Sharp corners */
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--primary) / 0.5);
+    background: hsl(var(--brand-strong) / 0.5);
   }
 }
 

@@ -96,7 +96,7 @@ export default function TechHeader() {
               className="relative mb-2 inline-block font-bold text-primary"
               whileHover={{
                 scale: 1.05,
-                color: "#78a9ff",
+                color: "hsl(var(--primary))",
                 transition: { duration: 0.3 },
               }}
             >
@@ -113,7 +113,7 @@ export default function TechHeader() {
               className="relative inline-block font-bold text-primary"
               whileHover={{
                 scale: 1.05,
-                color: "#78a9ff",
+                color: "hsl(var(--primary))",
                 transition: { duration: 0.3 },
               }}
             >
