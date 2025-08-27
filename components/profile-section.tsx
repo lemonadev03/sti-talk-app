@@ -224,7 +224,7 @@ export default function ProfileSection() {
                   >
                     <TechCorners color="hsl(var(--brand-strong) / 0.8)" strokeWidth={1.5} animated={!isMobile} />
                     <Image
-                      src="/lesmon-aws.png"
+                      src="/lesmon-1.png"
                       alt="Lesmon Andres"
                       width={sideImageSize}
                       height={sideImageSize}
@@ -295,7 +295,7 @@ export default function ProfileSection() {
                   >
                     <TechCorners color="hsl(var(--brand-strong) / 0.8)" strokeWidth={1.5} animated={!isMobile} />
                     <Image
-                      src="/lesmon-speaking-2.png"
+                      src="/lesmon-3.png"
                       alt="Lesmon at AWS event"
                       width={sideImageSize}
                       height={sideImageSize}
@@ -337,7 +337,7 @@ export default function ProfileSection() {
               >
                 <Image
                   ref={imageRef}
-                  src="/lesmon-speaking-1.png"
+                  src="/lesmon-pfp.png"
                   alt="Lesmon speaking at an event"
                   width={mainImageSize - 4}
                   height={mainImageSize - 4}
