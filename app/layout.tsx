@@ -20,13 +20,42 @@ const outfit = Outfit({
 })
 
 export const metadata: Metadata = {
-  title: "Lesmon Andres | Page",
-  description: "Personal link page for Lesmon Andres",
+  title: "Lesmon Andres",
+  description: "Tech Founder and Gen Z Yapper",
+  metadataBase: new URL('https://lesmonandres.com'),
   icons: {
     icon: "/la-logo.png",
     apple: "/la-logo.png",
   },
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  openGraph: {
+    title: "Lesmon Andres",
+    description: "Tech Founder and Gen Z Yapper",
+    url: "https://lesmonandres.com",
+    siteName: "Lesmon Andres",
+    images: [
+      {
+        url: "/la-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Lesmon Andres",
+      }
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lesmon Andres",
+    description: "Tech Founder and Gen Z Yapper",
+    site: "@lesmonandres",
+    creator: "@lesmonandres",
+    images: ["/la-logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export default function RootLayout({
