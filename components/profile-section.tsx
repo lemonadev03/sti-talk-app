@@ -117,7 +117,7 @@ export default function ProfileSection() {
 
   return (
     <motion.section
-      className="relative z-20 flex flex-col items-center justify-center py-24 text-left px-4 md:px-8"
+      className="relative z-20 flex flex-col items-center justify-center py-16 md:py-24 text-left px-4 md:px-8"
       initial={isMobile ? "visible" : "hidden"}
       animate="visible"
       variants={isMobile ? mobileProfileVariants : profileVariants}
@@ -138,7 +138,7 @@ export default function ProfileSection() {
       <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24 w-full max-w-screen-2xl mx-auto">
         {/* Image group container - includes space for side images */}
         <div
-          className={`relative flex justify-center items-center self-center${isMobile ? " mt-32 mb-8" : ""}`}
+          className={`relative flex justify-center items-center self-center${isMobile ? " mt-12 mb-6" : ""}`}
           style={{ width: isMobile ? "auto" : undefined }}
         >
           {/* Profile image with square tech style */}

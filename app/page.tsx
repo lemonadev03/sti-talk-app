@@ -72,7 +72,7 @@ export default function Home() {
             </div>
 
             {/* Content sections - now below the fold */}
-            <div className="space-y-16 py-16">
+            <div className="space-y-8 sm:space-y-16 py-8 sm:py-16">
               <div id="about">
                 <ProfileSection />
               </div>
