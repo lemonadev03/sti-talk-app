@@ -26,8 +26,10 @@ const techSkills = [
 // Hardcoded URL variables instead of environment variables
 const LINKEDIN_URL = "https://linkedin.com/in/lesmonandres"
 const TWITTER_URL = "https://twitter.com/lesmonandres"
-const FACEBOOK_URL = "https://facebook.com/lesmonandres"
-const INSTAGRAM_URL = "https://instagram.com/lesmonandres"
+const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61579727316224"
+const INSTAGRAM_URL = "https://instagram.com/lesmonandres_"
+const TIKTOK_URL = "https://www.tiktok.com/@lesmonandres"
+const YOUTUBE_URL = "https://www.youtube.com/@lesmonandres"
 const GITHUB_URL = "https://github.com/lemonadev03"
 const BSCALE_URL = "https://bscale.tech"
 const EMAIL_ADDRESS = "lesmon@bscale.tech"
@@ -82,6 +84,8 @@ export default function Home() {
                   twitterUrl={TWITTER_URL}
                   facebookUrl={FACEBOOK_URL}
                   instagramUrl={INSTAGRAM_URL}
+                  tiktokUrl={TIKTOK_URL}
+                  youtubeUrl={YOUTUBE_URL}
                   emailAddress={EMAIL_ADDRESS}
                 />
               </div>

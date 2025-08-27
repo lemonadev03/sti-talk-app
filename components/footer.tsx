@@ -20,13 +20,13 @@ interface FooterProps {
 }
 
 export default function Footer({
-  linkedinUrl = "https://linkedin.com",
-  twitterUrl = "https://twitter.com",
-  facebookUrl = "https://facebook.com",
-  instagramUrl = "https://instagram.com",
-  githubUrl = "https://github.com",
-  bscaleUrl = "#",
-  emailAddress = "lesmon@bscale.tech",
+  linkedinUrl,
+  twitterUrl,
+  facebookUrl,
+  instagramUrl,
+  githubUrl,
+  bscaleUrl,
+  emailAddress,
 }: FooterProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.3 })

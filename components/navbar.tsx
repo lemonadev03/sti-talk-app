@@ -17,12 +17,12 @@ interface NavbarProps {
 }
 
 export default function Navbar({
-  linkedinUrl = "https://linkedin.com",
-  twitterUrl = "https://twitter.com",
-  facebookUrl = "https://facebook.com",
-  instagramUrl = "https://instagram.com",
-  githubUrl = "https://github.com",
-  bscaleUrl = "#",
+  linkedinUrl,
+  twitterUrl,
+  facebookUrl,
+  instagramUrl,
+  githubUrl,
+  bscaleUrl,
 }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)

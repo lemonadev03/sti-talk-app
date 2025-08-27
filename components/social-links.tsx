@@ -5,19 +5,23 @@ import { useMobile } from "@/hooks/use-mobile"
 import { Mail, Music, Play } from "lucide-react"
 
 interface SocialLinksProps {
-  linkedinUrl?: string
-  twitterUrl?: string
-  facebookUrl?: string
-  instagramUrl?: string
-  emailAddress?: string
+  linkedinUrl: string
+  twitterUrl: string
+  facebookUrl: string
+  instagramUrl: string
+  tiktokUrl: string
+  youtubeUrl: string
+  emailAddress: string
 }
 
 export default function SocialLinks({
-  linkedinUrl = "https://www.linkedin.com/in/lesmonandres/",
-  twitterUrl = "https://x.com/lesmonandres",
-  facebookUrl = "https://www.facebook.com/lesmonandres/",
-  instagramUrl = "https://instagram.com/lesmonandres",
-  emailAddress = "lesmon@bscale.tech",
+  linkedinUrl,
+  twitterUrl,
+  facebookUrl,
+  instagramUrl,
+  tiktokUrl,
+  youtubeUrl,
+  emailAddress,
 }: SocialLinksProps) {
   const isMobile = useMobile()
 
@@ -40,7 +44,7 @@ export default function SocialLinks({
           <path d="M12.9 2h2.6c.2 1.2.8 2.2 1.7 3 1 .9 2.1 1.4 3.4 1.6v2.7c-1.3 0-2.6-.3-3.8-.9-.5-.2-1-.5-1.4-.8v6.6c0 3.9-3.2 7-7.1 7S2.1 18.1 2.1 14.2c0-3.7 2.7-6.7 6.2-7v2.8c-1.8.3-3.1 1.9-3.1 3.8 0 2.1 1.7 3.8 3.8 3.8s3.9-1.7 3.9-3.8V2z" />
         </svg>
       ),
-      href: "#",
+      href: tiktokUrl,
       color: "bg-[hsl(var(--brand-soft))]",
       hoverBg: "group-hover:bg-[hsl(var(--brand-soft))]",
     },
@@ -84,7 +88,7 @@ export default function SocialLinks({
           <path d="M23.5 6.2c-.3-1.2-1.2-2.1-2.3-2.4C19.3 3.3 12 3.3 12 3.3s-7.3 0-9.2.5C1.7 4.1.8 5 .5 6.2 0 8.1 0 12.2 0 12.2s0 4.1.5 6c.3 1.2 1.2 2.1 2.3 2.4 1.9.5 9.2.5 9.2.5s7.3 0 9.2-.5c1.1-.3 2-1.2 2.3-2.4.5-1.9.5-6 .5-6s0-4.1-.5-6zM9.8 15.5V8.5l6.1 3.5-6.1 3.5z" />
         </svg>
       ),
-      href: "#",
+      href: youtubeUrl,
       color: "bg-[hsl(var(--brand-strong))]",
       hoverBg: "group-hover:bg-[hsl(var(--brand-strong))]",
     },
