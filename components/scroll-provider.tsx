@@ -89,6 +89,16 @@ export const ScrollProvider: React.FC<ScrollProviderProps> = ({ children }) => {
     }
   }, [scrollPosition])
 
+  // Toggle an `html.scrolling` class while the user is actively scrolling
+  useEffect(() => {
+    const root = document.documentElement
+    if (isScrolling) {
+      root.classList.add('scrolling')
+    } else {
+      root.classList.remove('scrolling')
+    }
+  }, [isScrolling])
+
   return (
     <ScrollContext.Provider value={{ scrollPosition, scrollDirection, isScrolling }}>{children}</ScrollContext.Provider>
   )

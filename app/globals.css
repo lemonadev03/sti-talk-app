@@ -58,21 +58,52 @@
     scroll-behavior: smooth;
   }
 
-  /* Custom scrollbar - IBM Design Language inspired */
+  /* Prevent horizontal scrollbars from layout shifts */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Non-persistent overlay scrollbar: hidden by default, shown while scrolling */
+  /* Firefox */
+  html {
+    scrollbar-width: none; /* hide by default */
+  }
+  html.scrolling {
+    scrollbar-width: thin; /* show while scrolling */
+  }
+  @media (hover: hover) {
+    html:hover {
+      scrollbar-width: thin; /* show on hover (desktop) */
+    }
+  }
+
+  /* WebKit-based browsers */
+  /* Hidden by default */
   ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  /* Show while scrolling */
+  html.scrolling::-webkit-scrollbar,
+  html.scrolling ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
   }
-
+  @media (hover: hover) {
+    html:hover::-webkit-scrollbar,
+    html:hover ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+  }
   ::-webkit-scrollbar-track {
-    background: hsl(var(--background));
+    background: transparent;
   }
-
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--brand-strong) / 0.3);
-    border-radius: 0; /* Sharp corners */
+    border-radius: 4px;
   }
-
-  ::-webkit-scrollbar-thumb:hover {
+  html.scrolling ::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--brand-strong) / 0.5);
   }
 }
