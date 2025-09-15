@@ -25,13 +25,13 @@ export interface Slide {
   imageFirst?: boolean
 }
 
-export const TALK_TITLE = "From Chaos to Clarity: Functions & Data Structures in Python"
+export const TALK_TITLE = "From Chaos to Clarity: Control Flow,Functions & Data Structures in Python"
 
 export const slides: Slide[] = [
   {
     id: "1",
     kind: "title",
-    title: "Python Functions & Data Structures for Beginners",
+    title: "Python Control Flow, Functions & Data Structures for Beginners",
   },
   {
     id: "2",
@@ -39,7 +39,7 @@ export const slides: Slide[] = [
     title: "Today's Journey",
     bullets: [
       "Task → Challenge → Solution → Why It Was Important",
-      "Two core topics: Functions, Data Structures",
+      "Three core topics: Control Flow, Functions, Data Structures",
       "What to do next to take your skills to the next level",
     ],
   },
@@ -103,6 +103,153 @@ export const slides: Slide[] = [
     id: "funcsintro",
     kind: "title",
     title: "Are you ready to learn?",
+  },
+  // Control Flow Section (before Functions)
+  {
+    id: "cf0",
+    kind: "title",
+    title: "Part 0: Control Flow & Logic",
+  },
+  {
+    id: "cf1",
+    kind: "bullets",
+    title: "Introduction to Control Flow",
+    bullets: [
+      "Control flow decides which code runs and when.",
+      "Core tools: if/else, loops, and logical operators.",
+    ],
+  },
+  {
+    id: "cf2",
+    kind: "code",
+    title: "If / Else Statements",
+    bullets: ["Run code based on a condition", "Use ==, !=, <, >, <=, >="],
+    code: `age = 18\nif age >= 18:\n    print("You can vote!")\nelse:\n    print("Not old enough.")`,
+  },
+  {
+    id: "cf3",
+    kind: "code",
+    title: "Elif (Else If)",
+    bullets: ["Check multiple conditions in sequence"],
+    code: `score = 85\nif score >= 90:\n    print("A")\nelif score >= 80:\n    print("B")\nelse:\n    print("C or lower")`,
+  },
+  {
+    id: "cf4",
+    kind: "code",
+    title: "Logical Operators",
+    bullets: ["and: both true", "or: at least one true", "not: reverse truth"],
+    code: `age = 18\nhas_id = True\n\nif age > 17 and has_id:\n    print("Entry allowed")\nelse:\n    print("Entry denied")`,
+  },
+  {
+    id: "cf5",
+    kind: "code",
+    title: "Loops: for",
+    bullets: ["Repeat code for each item in a sequence"],
+    code: `fruits = ["apple", "banana", "cherry"]\nfor fruit in fruits:\n    print(fruit)`,
+  },
+  {
+    id: "cf6",
+    kind: "code",
+    title: "Loops: while",
+    bullets: ["Repeat code while a condition is true"],
+    code: `count = 3\nwhile count > 0:\n    print(count)\n    count -= 1`,
+  },
+  {
+    id: "cf7",
+    kind: "code",
+    title: "Break & Continue",
+    bullets: ["break: exit early", "continue: skip to next iteration"],
+    code: `for n in range(5):\n    if n == 3:\n        break    # stops loop at 3\n    if n % 2 == 0:\n        continue # skip even numbers\n    print(n)`,
+  },
+  {
+    id: "cf8",
+    kind: "code",
+    title: "Putting It Together",
+    bullets: ["Control flow + logic = decision-making"],
+    code: `numbers = [1, 2, 3, 4, 5]\nevens = []\nfor n in numbers:\n    if n % 2 == 0:\n        evens.append(n)\nprint("Even numbers:", evens)`,
+  },
+  {
+    id: "cf9",
+    kind: "bullets",
+    title: "Key Takeaways",
+    bullets: [
+      "Use if/elif/else to make decisions.",
+      "Use for and while to repeat tasks.",
+      "Logical operators (and, or, not) combine conditions.",
+      "break and continue give fine-grained loop control.",
+    ],
+  },
+  // Advanced Control Flow
+  {
+    id: "cf10",
+    kind: "code",
+    title: "Nested Conditions",
+    bullets: [
+      "Place conditions inside conditions for complex logic",
+      "Tip: reduce deep nesting with and/or for readability",
+    ],
+    code: `age = 20\nhas_ticket = True\n\nif age >= 18:\n    if has_ticket:\n        print("Welcome to the concert!")\n    else:\n        print("Please buy a ticket.")\nelse:\n    print("You must be 18 or older.")`,
+  },
+  {
+    id: "cf11",
+    kind: "code",
+    title: "Chained Comparisons",
+    bullets: [
+      "Python lets you chain comparisons for readability",
+      "Equivalent to combining with and",
+    ],
+    code: `x = 10\nif 0 < x < 20:\n    print("x is between 0 and 20")\n# Same as: if x > 0 and x < 20:`,
+  },
+  {
+    id: "cf12",
+    kind: "code",
+    title: "for…else and while…else",
+    bullets: [
+      "else runs only if the loop didn't break",
+      "Great for search tasks: nothing found → else",
+    ],
+    code: `# Print primes between 2 and 19\nfor n in range(2, 20):\n    for x in range(2, n):\n        if n % x == 0:\n            break\n    else:  # No break → n is prime\n        print(n, "is prime")`,
+  },
+  {
+    id: "cf13",
+    kind: "code",
+    title: "List Comprehensions & Conditional Expressions",
+    bullets: [
+      "Compact loops with optional conditions",
+      "Inline if/else for simple choices",
+    ],
+    code: `nums = [1, 2, 3, 4, 5]\nsquares_of_even = [n**2 for n in nums if n % 2 == 0]\nprint(squares_of_even)  # [4, 16]\n\nage = 17\nstatus = "adult" if age >= 18 else "minor"\nprint(status)`,
+  },
+  {
+    id: "cf14",
+    kind: "code",
+    title: "Pattern Matching (match / case)",
+    bullets: [
+      "Python 3.10+: like switch with destructuring",
+      "Cleanly handle multiple cases",
+    ],
+    code: `command = "start"\n\nmatch command:\n    case "start":\n        print("Starting...")\n    case "stop":\n        print("Stopping...")\n    case _:\n        print("Unknown command")`,
+  },
+  {
+    id: "cf15",
+    kind: "code",
+    title: "Exception Handling as Flow Control",
+    bullets: [
+      "try/except handles errors gracefully",
+      "else runs on success; finally always runs",
+    ],
+    code: `try:\n    num = 2  # change to 0 or 'abc' to see different paths\n    result = 10 / num\nexcept ZeroDivisionError:\n    print("Cannot divide by zero!")\nexcept TypeError:\n    print("Invalid type!")\nelse:\n    print("Division successful:", result)\nfinally:\n    print("This always runs.")`,
+  },
+  {
+    id: "cf16",
+    kind: "bullets",
+    title: "Key Takeaways (Advanced Flow)",
+    bullets: [
+      "Nested conditions and chaining improve expressiveness",
+      "for/while…else elegantly handle 'not found' logic",
+      "List comprehensions and inline if keep code concise",
+      "Pattern matching and exceptions manage complex paths",
+    ],
   },
   {
     id: "funcs1",
